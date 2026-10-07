@@ -137,7 +137,7 @@ Cada ADR registra problema, decisión, motivo, riesgo y prueba de aceptación (i
 
 ### ADR-10 · TilcAI emite y patrocina cuentas, y nunca es firmante
 
-- **Problema:** agentes y terceros como Optus necesitan cuentas con límites verificables, sin entregar la custodia a TilcAI.
+- **Problema:** agentes y empresas y PYMES integradoras necesitan cuentas con límites verificables, sin entregar la custodia a TilcAI.
 - **Decisión:** TilcAI despliega la cuenta que el dueño definió, paga las comisiones y guarda el registro. El único firmante inicial es la credencial del dueño (passkey, ed25519 o EOA). La clave del agente la guarda el tercero, y la cuenta limita lo que esa clave puede hacer. TilcAI no aloja claves de agente hasta que existan los mandatos de la fase 2.
 - **Motivo:** el informe §12 exige que el principal conserve la administración. Si TilcAI no tiene claves, comprometer a TilcAI no mueve fondos.
 - **Riesgo:** una clave de agente filtrada en el tercero gasta hasta el límite de la regla. La recuperación depende de una segunda credencial del dueño.
@@ -867,7 +867,7 @@ La emisión de cuentas, la delegación on-chain y el envío de UserOps se constr
 | `tilcai_spend_policy` + clave del agente | Fase SCA, M3 |
 | ERC-4337 en Fuji: cuenta, router v2 y envío de UserOps, sin bundler externo ni paymaster (ADR-12) | Fase SCA, M4 y M5 |
 | Revocación con pagos en vuelo y ejercicio de recuperación | Fase SCA, M3 y M5 |
-| Piloto con Optus | Fase SCA, M6 |
+| Piloto empresarial | Fase SCA, M6 |
 | Delegación ligada a mandatos: firmante alojado en `signers/`, `actionHash`, presupuesto | Fase 3, después de la fase 2 (Jose + Omar) |
 
 ### 15.4 Fase 4 — Identidad interoperable y A2A

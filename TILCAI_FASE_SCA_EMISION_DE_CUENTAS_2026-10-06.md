@@ -17,7 +17,7 @@ aliases:
 
 # TilcAI — fase SCA: emisión de cuentas abstractas para agentes y terceros
 
-**Alcance:** que TilcAI emita y patrocine *smart contract accounts* (SCA) en Stellar y en EVM para sus propios agentes y para terceros como Optus, con un dueño que nunca es TilcAI y un agente con límites verificados on-chain.
+**Alcance:** que TilcAI emita y patrocine *smart contract accounts* (SCA) en Stellar y en EVM para sus propios agentes y para empresas y PYMES integradoras, con un dueño que nunca es TilcAI y un agente con límites verificados on-chain.
 **Base:** [[TILCAI_PLAN_ARQUITECTURA_BACKEND_INFRA_2026-10-02|plan de arquitectura]] (v1.1, ADR-06, ADR-07 y ADR-10 a ADR-13) e [[TILCAI_NUEVO_RUMBO_COMERCIO_AGENTICO_2026-09-29|informe de producto 2.0]] §12.
 **Código:** `tilcai-infrastructure/` (`contracts/soroban`, `contracts/evm`, `src/modules/accounts`, `src/modules/tenants`).
 **Equipo:** Omar · Jhamil · Saul · Jose. Los responsables de esta fase son una **propuesta** hasta que el equipo los confirme.
@@ -35,7 +35,7 @@ aliases:
 7. [[#7. Backend: terceros, datos y API]]
 8. [[#8. Hitos]]
 9. [[#9. M0 paso a paso]]
-10. [[#10. Piloto con Optus]]
+10. [[#10. Piloto con empresa integradora]]
 11. [[#11. Pruebas]]
 12. [[#12. Riesgos y preguntas abiertas]]
 13. [[#13. Preparación realizada]]
@@ -73,10 +73,10 @@ Estado del código al 2026-10-06.
 | Datos | Tablas de cotizaciones, pagos, eventos y recibos | Tablas de tenants, cuentas y delegaciones |
 | Relayer | Envía el mint en Stellar y el burn en Fuji | Desplegar cuentas y enviar UserOps |
 
-**Cómo se integra Optus hoy.** Sus dos backends llaman a la API v1 en modo `gasless`.
+**Punto de partida de una empresa integradora.** Sus dos superficies llaman a la API v1 en modo `gasless`.
 
-- **Optipagos** crea una EOA por usuario en Avalanche. La clave se genera en el navegador y se guarda cifrada con la passkey del usuario. Su propia fase 2 prevé una cuenta inteligente con passkey.
-- **optus-agentBE** paga a proveedores con una clave caliente (`PRIVATE_KEY_MOCK`) que puede gastar todo el saldo. La aprobación del administrador con passkey se verifica solo off-chain.
+- **Interfaz de pagos** crea una EOA por usuario en Avalanche. La clave se genera en el navegador y se guarda cifrada con la passkey del usuario. Su propia fase 2 prevé una cuenta inteligente con passkey.
+- **Backend del agente** paga a proveedores con una clave caliente (`PRIVATE_KEY_MOCK`) que puede gastar todo el saldo. La aprobación del administrador con passkey se verifica solo off-chain.
 
 ## 3. Hechos verificados
 
@@ -105,7 +105,7 @@ Comprobados el 2026-10-06. Los cinco primeros se repiten con `npm run sca:prefli
 | Papel | Quién | Qué tiene | Qué puede hacer |
 | --- | --- | --- | --- |
 | Emisor y patrocinador | TilcAI | Factory, Relayer, registro de cuentas | Desplegar la cuenta que el dueño definió y pagar comisiones. Nada sobre los fondos |
-| Tercero | Optus u otro tenant | Clave de API, su interfaz y sus usuarios | Pedir cuentas, preparar delegaciones, presentar firmas |
+| Tercero | Una empresa o PYME integradora | Clave de API, su interfaz y sus usuarios | Pedir cuentas, preparar delegaciones, presentar firmas |
 | Dueño | Usuario o empresa del tercero | Passkey, ed25519 o EOA | Todo: gastar, delegar, revocar, cambiar firmantes |
 | Agente | Backend del tercero o agente de TilcAI | Clave de sesión | Pagar dentro de la regla que el dueño firmó |
 
@@ -113,7 +113,7 @@ Comprobados el 2026-10-06. Los cinco primeros se repiten con `npm run sca:prefli
 sequenceDiagram
     autonumber
     participant U as Dueño (passkey)
-    participant T as Tercero (Optus)
+    participant T as Tercero (empresa integradora)
     participant A as TilcAI API
     participant R as OZ Relayer
     participant C as Cuenta (SCA)
@@ -226,7 +226,7 @@ El Relayer EVM llama a `EntryPoint.handleOps([userOp], beneficiario)` como una t
 
 ### 7.1 Terceros
 
-Un tenant tiene claves de API guardadas como hash, permisos (`payments`, `accounts:read`, `accounts:write`) y una cuota diaria de cuentas y de operaciones patrocinadas. Las claves de `TILCAI_API_KEYS` pasan a un tenant heredado con permiso `payments`, para que Optipagos y optus-agentBE sigan funcionando sin cambios.
+Un tenant tiene claves de API guardadas como hash, permisos (`payments`, `accounts:read`, `accounts:write`) y una cuota diaria de cuentas y de operaciones patrocinadas. Las claves de `TILCAI_API_KEYS` pasan a un tenant heredado con permiso `payments`, para que la interfaz de pagos y el backend del agente sigan funcionando sin cambios.
 
 ### 7.2 Datos (migración 3, borrador)
 
@@ -267,7 +267,7 @@ flowchart LR
     M1["M1 · Terceros y registro"] --> M2 --> M3["M3 · Delegación Stellar"]
     M0 --> M4["M4 · Emisión EVM"]
     M1 --> M4 --> M5["M5 · Delegación EVM"]
-    M3 --> M6["M6 · Piloto Optus"]
+    M3 --> M6["M6 · Piloto empresarial"]
     M5 --> M6
     M6 --> M7["M7 · Cierre"]
 ```
@@ -280,7 +280,7 @@ flowchart LR
 | **M3** | `tilcai_spend_policy`, delegación, pago y revocación | Un pago dentro de la regla se liquida. Importe mayor, otro destinatario, otra función, periodo agotado, regla vencida o regla revocada se rechazan on-chain | Jose + Jhamil | L |
 | **M4** | `TilcaiAccount`, factory y router v2 en Fuji; modo `account` | Cuenta con passkey paga por el camino A y el pago queda `SETTLED`. Una firma para otra ruta o de otra cuenta se rechaza | Saul + Jose | L |
 | **M5** | `TilcaiSessionPolicy`, envío de UserOps, modo `account_agent` | UserOp del agente con el lote permitido se liquida. Otro objetivo, otro `payTo` o importe sobre el tope se rechazan on-chain | Saul + Jose | L |
-| **M6** | optus-agentBE sin `PRIVATE_KEY_MOCK`; después Optipagos | El backend de Optus no puede pagar a un destino fuera de la regla aunque su clave se filtre | Saul + equipo de Optus | M |
+| **M6** | Backend del agente sin `PRIVATE_KEY_MOCK`; después, interfaz de pagos | El backend de la empresa integradora no puede pagar a un destino fuera de la regla aunque su clave se filtre | Saul + equipo de la empresa piloto | M |
 | **M7** | Cliente TypeScript, OpenAPI, runbooks, reproducción | Un segundo integrante repite M2 a M5 con la documentación | Equipo | M |
 
 ## 9. M0 paso a paso
@@ -328,10 +328,10 @@ Un pago de 0,1 USDC con `npm run xpay -- --amount 0.1 --to <C… de S1> --gasles
 
 **Sirve si** las tres transacciones se confirman y el Relayer es quien paga el gas. **Si la tarifa cero no sirve,** se despliega un paymaster sobre `PaymasterSigner`. **Si ERC-1271 no sirve,** el camino A pasa a ser una UserOp firmada por el dueño.
 
-## 10. Piloto con Optus
+## 10. Piloto con empresa integradora
 
-1. **optus-agentBE, primero.** La empresa recibe una cuenta en Fuji con la passkey del administrador como dueño. El backend de Optus genera una clave de sesión y el administrador firma una regla limitada al proveedor, con tope por pago y por periodo. `PRIVATE_KEY_MOCK` desaparece. Es el caso de más valor: hoy esa clave puede gastar todo el saldo.
-2. **Optipagos, después.** Los usuarios nuevos reciben una cuenta con passkey en lugar de una EOA cifrada. Los usuarios actuales mueven su saldo con una firma. Coincide con la fase 2 de su modelo de custodia.
+1. **Backend del agente, primero.** La empresa recibe una cuenta en Fuji con la passkey del administrador como dueño. El backend de la empresa integradora genera una clave de sesión y el administrador firma una regla limitada al proveedor, con tope por pago y por periodo. `PRIVATE_KEY_MOCK` desaparece. Es el caso de más valor: hoy esa clave puede gastar todo el saldo.
+2. **Interfaz de pagos, después.** Los usuarios nuevos reciben una cuenta con passkey en lugar de una EOA cifrada. Los usuarios actuales mueven su saldo con una firma. Coincide con la fase 2 de su modelo de custodia.
 3. **Receptores en Stellar.** Si S3 sirve, un proveedor puede cobrar en una cuenta `C…` sin crear trustline.
 
 ## 11. Pruebas
@@ -383,4 +383,4 @@ Para trabajar hace falta Node ≥ 22.16 (en la máquina de Saul, `nvm use 24`) y
 - OpenZeppelin Contracts 5.x, cuentas: https://docs.openzeppelin.com/contracts/5.x/accounts.
 - ERC-4337: https://eips.ethereum.org/EIPS/eip-4337 · ERC-1271: https://eips.ethereum.org/EIPS/eip-1271 · EIP-3009: https://eips.ethereum.org/EIPS/eip-3009.
 - ACP-209 (EIP-7702 en Avalanche): https://docs.avax.network/docs/acps/209-eip7702-style-account-abstraction.
-- Optus: `optipagos-backend/docs/arquitectura/03-modelo-de-custodia.md`, `optus-agentBE/docs/manual-pago-proveedores.md`.
+- Material interno de la empresa piloto: modelo de custodia y manual de pago a proveedores.
