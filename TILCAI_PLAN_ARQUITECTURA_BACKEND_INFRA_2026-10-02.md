@@ -1,7 +1,8 @@
 ---
 title: TilcAI — plan y arquitectura del backend y la infraestructura
 date: 2026-10-02
-version: "1.0"
+updated: 2026-10-06
+version: "1.1"
 status: plan-de-construccion
 tags:
   - tilcai
@@ -22,6 +23,7 @@ aliases:
 **Base:** [[TILCAI_NUEVO_RUMBO_COMERCIO_AGENTICO_2026-09-29|informe de producto 2.0]], `tilcai-core` (contratos compartidos, MCP, riel x402 probado), `tilcai-cctp-engine` (laboratorio CCTP verificado on-chain) y `tilcai-web` (arquitectura publicada).
 **Código:** `tilcai-infrastructure/` (nuevo). La **fase 1** de este plan —pagos USDC de Avalanche a Stellar, con el gas de ambas redes pagado por el relayer— está implementada y **verificada con transferencias reales en testnet** (§14.6).
 **Equipo:** Omar · Jhamil · Saul · Jose.
+**Actualización 1.1 (2026-10-06):** se abre la **fase SCA**, que adelanta la fase 3 y añade la emisión de cuentas abstractas para agentes y terceros. Cambian ADR-06 y ADR-07, se añaden ADR-10 a ADR-13 y se ajustan §5 a §10, §12, §13, §15 y §17. El detalle, los hechos verificados y los hitos M0–M7 están en [[TILCAI_FASE_SCA_EMISION_DE_CUENTAS_2026-10-06|fase SCA]].
 
 > Convenciones. **Implementado** = existe código con tests. **Verificado** = ejecutado contra la red o el servicio real. **Diseño** = decisión tomada, sin código. **Verificar** = dato que hay que confirmar on-chain o en la documentación de la versión fijada antes de implementarlo. Todo es **testnet** hasta el hito de §15.6.
 
@@ -58,11 +60,12 @@ TilcAI liquida en **Stellar** y acepta financiación desde **otras redes** con U
 | Pago directo | x402 v2 `exact` + plugin facilitador en OZ Relayer | Verificado con XLM (tilcai-core) |
 | Pago crosschain | Circle CCTP V2: burn en Avalanche → `CctpForwarder.mint_and_forward` en Stellar | **Implementado y verificado (fase 1)** |
 | Gas en Stellar | El Relayer firma y paga XLM (`mint_and_forward`, liquidaciones x402, despliegue de cuentas) | Implementado para el mint; x402 verificado |
-| Gas en EVM | Router con EIP-3009 enviado por el Relayer EVM (**fase 1, desplegado y verificado**). Fase 3: ERC-4337 + paymaster | Router ✔ / 4337 diseño |
-| Cuentas | Stellar: smart account de OpenZeppelin con firmante delegado y política de gasto. EVM: cuenta 4337 opcional | Diseño |
+| Gas en EVM | Router con EIP-3009 enviado por el Relayer EVM (**fase 1, desplegado y verificado**). Fase SCA: UserOps de tarifa cero que envía el propio Relayer, sin bundler externo ni paymaster (ADR-12) | Router ✔ / 4337 diseño |
+| Cuentas | TilcAI emite y patrocina cuentas para agentes y terceros y nunca es firmante (ADR-10). Stellar: `tilcai_account` sobre OpenZeppelin `stellar-accounts` 0.7.2. EVM: cuenta ERC-4337 de OpenZeppelin Contracts 5.7.0 con passkey | Contrato base de Stellar implementado; el resto, diseño |
+| Terceros | Tenants con claves propias, cuotas de patrocinio y `tenant_id` en cuentas y pagos (ADR-13) | Diseño |
 | Identidad | Perfil nativo (raíz de confianza en el onboarding) + resolver ERC-8004 en EVM | Diseño |
 | Interfaces | REST v1 (implementada para crosschain) → MCP (fase 2) → A2A (fase 4) | Parcial |
-| Persistencia | SQLite WAL en la fase 1 → Postgres en la fase 2 | Implementado (SQLite) |
+| Persistencia | SQLite WAL en la fase 1 y en la fase SCA → Postgres en la fase 2 | Implementado (SQLite) |
 
 **Cambio respecto al informe 2.0.** El §8.5 del informe dejaba fuera del primer alcance los «bridges cross-chain». Este plan incorpora el pago crosschain con **CCTP**, que no es un bridge de liquidez: quema USDC nativo en origen y Circle, el propio emisor, lo acuña en destino. No hay wrappers, pools ni un tercero adicional (ADR-02). El resto de principios del informe se mantiene intacto: autoridad humana, idempotencia, conciliación antes de reintentar, evidencias separadas y nada de autonomía ilimitada.
 
@@ -97,6 +100,7 @@ Cada ADR registra problema, decisión, motivo, riesgo y prueba de aceptación (i
 - **Decisión:** `node:sqlite` en modo WAL, detrás de interfaces de repositorio. Postgres 16 cuando haya varios procesos escritores, presupuesto compartido o MCP multiusuario.
 - **Motivo:** cero dependencias operativas para la ruta vertical. Las garantías que importan (índices únicos, bloqueo optimista, transacciones) existen en ambos motores.
 - **Aceptación:** la suite de repositorio se ejecuta contra ambas implementaciones.
+- **Nota 1.1:** la fase SCA sigue en SQLite. Hay un solo proceso escritor y sus tablas nuevas van detrás de las mismas interfaces de repositorio.
 
 ### ADR-05 · El Relayer patrocina el gas de destino en Stellar
 
@@ -104,18 +108,20 @@ Cada ADR registra problema, decisión, motivo, riesgo y prueba de aceptación (i
 - **Motivo:** el comercio y el comprador no necesitan XLM. `mint_and_forward` no exige autorización (el forwarder es `destinationCaller`), así que el Relayer no recibe ninguna autoridad sobre fondos.
 - **Aceptación:** el pagador no tiene cuenta en Stellar y el comercio recibe el USDC.
 
-### ADR-06 · Gas en EVM sin AVAX del pagador: primero EIP-3009, después ERC-4337
+### ADR-06 · Gas en EVM sin AVAX del pagador: EIP-3009 para todos, ERC-4337 para el agente
 
-- **Decisión:** en la fase 1 (adelantada), `TilcaiCctpRouter` recibe una autorización EIP-3009 (`receiveWithAuthorization`) firmada por el pagador y el Relayer EVM envía la transacción. En la fase 3, cuenta ERC-4337 + paymaster de verificación para los pagadores con smart account.
-- **Motivo:** EIP-3009 es el mismo mecanismo que usa x402 `exact` en EVM, funciona con cualquier EOA y no necesita bundler. 4337 añade política de cuenta y recuperación cuando el producto lo requiera.
-- **Riesgo:** el router es código propio (auditoría y límites). Para 4337 hace falta bundler y depósito en el EntryPoint.
-- **Aceptación:** pagador con 0 AVAX completa un pago, y una firma reutilizada o con otro `paymentId` se rechaza.
+*Revisado el 2026-10-06.*
+
+- **Decisión:** `TilcaiCctpRouter` recibe una autorización EIP-3009 (`receiveWithAuthorization`) firmada por el pagador y el Relayer EVM envía la transacción. En la fase SCA el router gana la variante con firma `bytes`, que el USDC comprueba por ERC-1271, y así una cuenta de contrato paga igual que una EOA. ERC-4337 se usa solo cuando paga la clave de un agente, porque sus límites por periodo necesitan escribir estado. Quién envía esas UserOps se decide en ADR-12.
+- **Motivo:** EIP-3009 es el mismo mecanismo que usa x402 `exact` en EVM y no necesita bundler. El USDC de Fuji tiene la variante `bytes` (verificado el 2026-10-06). ERC-1271 es de solo lectura y no puede llevar la cuenta de lo gastado.
+- **Riesgo:** los dos routers son código propio (auditoría y límites).
+- **Aceptación:** pagador con 0 AVAX completa un pago, sea EOA o cuenta de contrato, y una firma reutilizada o con otro `paymentId` se rechaza.
 
 ### ADR-07 · Account abstraction en Stellar con OpenZeppelin smart accounts
 
-- **Decisión:** smart account de `stellar-contracts` (reglas de contexto, firmantes, políticas) + política propia `tilcai_spend_policy`. Sin fork del contrato de cuenta.
-- **Motivo:** el informe §12.8 lo fija como base de evaluación. Separa identidad del firmante, alcance y restricciones.
-- **Riesgo:** compatibilidad con el facilitador x402 (credenciales de dirección de contrato: §7.1.4). Hay que probarla antes de habilitar la delegación (informe §14.5).
+- **Decisión:** `stellar-accounts` 0.7.2 de OpenZeppelin, fijada (reglas de contexto, firmantes, políticas). Es una librería: `tilcai_account` la expone como contrato sin añadir lógica de autorización y no es actualizable. Se suman la política de límite de OpenZeppelin y una política propia, `tilcai_spend_policy`. El agente es un firmante externo (verificador ed25519), no delegado.
+- **Motivo:** el informe §12.8 lo fija como base de evaluación. Separa identidad del firmante, alcance y restricciones. OpenZeppelin auditó el RC v0.7.0 en marzo de 2026. Un firmante externo mantiene el pago en una sola entrada de autorización, que es lo que el facilitador x402 verifica.
+- **Riesgo:** compatibilidad con el facilitador x402 (credenciales de dirección de contrato: §7.1.5). Hay que probarla antes de habilitar la delegación (informe §14.5, hito M0 de la fase SCA). Las políticas propias no están auditadas.
 - **Aceptación:** una compra delegada se liquida en testnet y una prohibida falla antes de mover fondos.
 
 ### ADR-08 · ERC-8004 como capa de identidad interoperable, no como raíz de confianza única
@@ -128,6 +134,37 @@ Cada ADR registra problema, decisión, motivo, riesgo y prueba de aceptación (i
 
 - **Decisión:** importes como `bigint` y strings enteros canónicos, nunca floats. Redes en CAIP-2 (`eip155:43113`, `stellar:testnet`) y activos por contrato, nunca por la etiqueta `USDC`. Stellar USDC tiene 7 decimales; CCTP transporta 6. Solo se aceptan importes con ≤ 6 decimales en rutas CCTP.
 - **Aceptación:** `1.0000001` se rechaza en una cotización crosschain (test `quote: exact amounts`).
+
+### ADR-10 · TilcAI emite y patrocina cuentas, y nunca es firmante
+
+- **Problema:** agentes y terceros como Optus necesitan cuentas con límites verificables, sin entregar la custodia a TilcAI.
+- **Decisión:** TilcAI despliega la cuenta que el dueño definió, paga las comisiones y guarda el registro. El único firmante inicial es la credencial del dueño (passkey, ed25519 o EOA). La clave del agente la guarda el tercero, y la cuenta limita lo que esa clave puede hacer. TilcAI no aloja claves de agente hasta que existan los mandatos de la fase 2.
+- **Motivo:** el informe §12 exige que el principal conserve la administración. Si TilcAI no tiene claves, comprometer a TilcAI no mueve fondos.
+- **Riesgo:** una clave de agente filtrada en el tercero gasta hasta el límite de la regla. La recuperación depende de una segunda credencial del dueño.
+- **Aceptación:** con todas las claves de TilcAI no se puede mover el saldo de una cuenta emitida.
+
+### ADR-11 · La dirección de una cuenta compromete a su dueño
+
+- **Problema:** una cuenta puede recibir fondos antes de existir. Quien la despliegue decide el dueño.
+- **Decisión:** una factory por red deriva la dirección de la clave del dueño y de un salt (`sha256(tenantId ‖ externalRef ‖ índice)`). El Relayer invoca la factory. No se despliega con la cuenta del Relayer como origen fuera de las pruebas de M0.
+- **Motivo:** la dirección deja de depender de la clave del Relayer y nadie puede desplegar otra configuración en una dirección ya fondeada.
+- **Riesgo:** las factories son código propio.
+- **Aceptación:** la dirección calculada antes del despliegue coincide con la desplegada, y un despliegue con otro dueño da otra dirección.
+
+### ADR-12 · El Relayer envía las UserOps; sin bundler externo ni paymaster
+
+- **Problema:** el Relayer no tiene función de bundler ERC-4337, y la versión 1.0 de este plan preveía un bundler aparte y `TilcaiPaymaster`.
+- **Decisión:** el Relayer EVM llama a `EntryPoint.handleOps` como una transacción normal. Las UserOps llevan tarifa cero, el EntryPoint no exige depósito y el Relayer paga el gas. TilcAI solo envía operaciones ya simuladas de cuentas que emitió. `TilcaiPaymaster` queda aplazado hasta que haya que aceptar bundlers de terceros.
+- **Motivo:** el patrocinio ya lo decide el backend de TilcAI. Un paymaster firmado por ese mismo backend no añade control y sí añade un contrato que auditar y un depósito que vigilar.
+- **Riesgo:** una operación que falla on-chain cuesta gas al Relayer. Hay que confirmar la tarifa cero con EntryPoint v0.9 en Fuji (hito M0).
+- **Aceptación:** una UserOp de una cuenta emitida se ejecuta con 0 AVAX en la cuenta y sin paymaster, y una de una cuenta ajena no se envía.
+
+### ADR-13 · Terceros como tenants
+
+- **Problema:** `TILCAI_API_KEYS` es una lista plana. No dice quién llama ni cuánto patrocinio consume.
+- **Decisión:** tenants con claves guardadas como hash, permisos por clave, cuota diaria de cuentas y de operaciones patrocinadas, y `tenant_id` en cuentas, cotizaciones y pagos. Las claves actuales pasan a un tenant heredado.
+- **Motivo:** aislar a un tercero de otro y poner tope a lo que paga el Relayer por cada uno.
+- **Aceptación:** la clave de un tenant no lee ni opera cuentas de otro, y una cuota agotada rechaza la petición sin gastar.
 
 ## 3. Vista general del sistema
 
@@ -231,14 +268,15 @@ src/
     policies/    PolicyEngine (envuelve evaluateIntent)        (fase 2, Omar)
     budgets/     BudgetStore atómico                           (fase 2–3, Jhamil)
     authorization/ aprobaciones y mandatos                     (fase 2–3, Jose + Omar)
-    accounts/    smart accounts Stellar · 4337 · paymaster     (fase 3, Jose + Saul)
+    accounts/    emisión de cuentas: Stellar · ERC-4337        (fase SCA, Jose + Saul)
+    tenants/     terceros, claves y cuotas de patrocinio       (fase SCA, Jhamil + Omar)
     signers/     frontera de firma                             (fase 3, Jose)
     principals/ agents/ receipts/
     connectors/{mcp,a2a}/                                       (fase 2 / 4, Omar)
     jobs/        conciliación ✔ · scheduler (fase 5)
-  apps/          api · worker · all-in-one · cli/{crosschain-pay, relayer-check}
-contracts/evm/   Foundry: TilcaiCctpRouter, TilcaiPaymaster
-contracts/soroban/ tilcai_spend_policy, tilcai_budget
+  apps/          api · worker · all-in-one · cli/{crosschain-pay, relayer-check, sca-preflight}
+contracts/evm/   Foundry: TilcaiCctpRouter ✔ · router v2, TilcaiAccount, factory, TilcaiSessionPolicy (fase SCA)
+contracts/soroban/ Cargo: tilcai_account, verificadores, política de límite ✔ · factory, tilcai_spend_policy (fase SCA)
 test/unit · test/integration
 ```
 
@@ -261,7 +299,8 @@ test/unit · test/integration
 | `PolicyEngine` | `policies/ports.ts` | Omar | Gateway |
 | `BudgetStore` | `budgets/ports.ts` | Jhamil | Orquestador |
 | `AuthorizationProvider` | `authorization/ports.ts` | Jose + Omar | Gateway, interfaz de control |
-| `StellarSmartAccountProvider`, `EvmSmartAccountProvider`, `PaymasterProvider` | `accounts/ports.ts` | Jose + Saul | Onboarding, riel |
+| `SmartAccountProvider` (uno por red), `UserOperationSubmitter` | `accounts/ports.ts` | Jose + Saul | API de cuentas, riel |
+| `TenantRegistry` | `tenants/ports.ts` | Jhamil + Omar | API |
 | `SignerProvider` | `signers/ports.ts` | Jose | Rieles |
 | `ReceiptStore` | `receipts/ports.ts` | Equipo | Control y auditoría |
 
@@ -310,7 +349,9 @@ sequenceDiagram
 
 Se añaden, con la misma disciplina (ID `tilcai-shared-v1`, UTC, importes como `numeric(78,0)`/texto):
 
-`principals`, `agents`, `businesses`, `business_offer_keys`, `business_payout_destinations` (versionado), `services`, `quotes` (firmadas), `orders`, `intents`, `mandates` (revisiones), `approvals`, `budgets`, `budget_reservations`, `payment_attempts` (genérica, con `rail` = `x402-stellar-exact` | `cctp-v2`), `decision_receipts`, `fulfillment_receipts`, `idempotency_keys` (principal + agente + herramienta + hash), `relayer_webhooks` (deduplicación), `smart_accounts`, `account_rules`, `erc8004_links`, `audit_log`.
+`principals`, `agents`, `businesses`, `business_offer_keys`, `business_payout_destinations` (versionado), `services`, `quotes` (firmadas), `orders`, `intents`, `mandates` (revisiones), `approvals`, `budgets`, `budget_reservations`, `payment_attempts` (genérica, con `rail` = `x402-stellar-exact` | `cctp-v2`), `decision_receipts`, `fulfillment_receipts`, `idempotency_keys` (principal + agente + herramienta + hash), `relayer_webhooks` (deduplicación), `erc8004_links`, `audit_log`.
+
+La fase SCA adelanta, como migración 3 de SQLite, `tenants`, `tenant_api_keys`, `tenant_usage`, `smart_accounts`, `account_delegations` y `account_events`, y añade `tenant_id` a `route_quotes` y `crosschain_payments` ([[TILCAI_FASE_SCA_EMISION_DE_CUENTAS_2026-10-06#7. Backend: terceros, datos y API|fase SCA §7]]).
 
 Reglas:
 
@@ -324,10 +365,11 @@ Un pago siempre va hacia el `payTo` Stellar del negocio con el SAC de USDC. Camb
 
 | Riel | Origen | Firma del pagador | Envío | Estado |
 | --- | --- | --- | --- | --- |
-| `x402-stellar-exact` | Cuenta Stellar G… (fase 2) o smart account C… (fase 3) | Auth entry Soroban de `transfer` | Plugin x402 del Relayer (`/verify`, `/settle`) | Verificado con XLM |
+| `x402-stellar-exact` | Cuenta Stellar G… (fase 2) o smart account C… (fase SCA) | Auth entry Soroban de `transfer` | Plugin x402 del Relayer (`/verify`, `/settle`) | Verificado con XLM |
 | `cctp-v2` (externo) | EOA en Avalanche Fuji | `approve` + `depositForBurnWithHook` (paga AVAX) | Wallet del pagador; el mint lo envía el Relayer | **Implementado** |
 | `cctp-v2` (sin gas) | EOA en Fuji | EIP-712 `ReceiveWithAuthorization` | Relayer EVM → `TilcaiCctpRouter` | **Implementado y verificado** |
-| `cctp-v2` (4337) | Smart account EVM | UserOperation | Bundler + `TilcaiPaymaster` | Fase 3 |
+| `cctp-v2` (cuenta, firma el dueño) | Smart account EVM | EIP-712 `ReceiveWithAuthorization` con firma ERC-1271 | Relayer EVM → `TilcaiCctpRouterV2` | Fase SCA (M4) |
+| `cctp-v2` (cuenta, firma el agente) | Smart account EVM | UserOperation de la clave de sesión | Relayer EVM → `EntryPoint.handleOps` (ADR-12) | Fase SCA (M5) |
 
 ### 7.1 x402 sobre Stellar (riel directo)
 
@@ -342,7 +384,7 @@ Base verificada en `tilcai-core/docs/payment-rail-environment.md`: x402 v2, esqu
    - `submit`: persiste el intento (`PREPARED`) con el nonce de la auth entry y su `signatureExpirationLedger`, llama `/verify` y luego `/settle`, y persiste el hash **antes** de interpretar el resultado.
    - `reconcile`: aplica la tabla 6.2 del documento del riel (`success:false` + hash → `UNCERTAIN`, 504 → `UNCERTAIN`, `NOT_FOUND` solo es fallo cuando la auth entry ya expiró).
 4. **Servidor de recurso x402** para negocios que exponen su API por HTTP: middleware que responde `402` con `accepts` construido por TilcAI. El cliente `@x402/fetch` queda como cliente de compatibilidad (no probado aún, §8.9 del documento del riel).
-5. **Smart accounts como pagador** (fase 3): la auth entry de un `C…` usa credenciales de dirección con `__check_auth`. Hay que probar que el plugin acepta ese tipo de credencial (`…_unsupported_credential_type` aparece en su catálogo de errores). Si no lo acepta, se contribuye el soporte al plugin o se usa el riel de §10.1.4.
+5. **Smart accounts como pagador** (fase SCA): la auth entry de un `C…` usa credenciales de dirección con `__check_auth`. El plugin 0.6.0 acepta credenciales de dirección, clásicas y V2, rechaza las delegadas y las subinvocaciones, y vuelve a simular la transacción (leído en su código el 2026-10-06). Por eso el agente es un firmante externo. Falta la prueba real, que es el hito M0. Si el plugin no la acepta, se contribuye el soporte o se usa la ruta de §10.1.4.
 
 ### 7.2 Crosschain CCTP V2 (Avalanche → Stellar)
 
@@ -445,12 +487,21 @@ function payWithAuthorization(
 - Verificado on-chain: Fuji USDC (`name` «USD Coin», `version` 2) implementa `receiveWithAuthorization` y `authorizationState`. El nonce de TypeScript coincide con `authorizationNonce` del contrato desplegado y el dominio EIP-712 coincide con el `DOMAIN_SEPARATOR` del USDC (`test/integration/router.test.ts`).
 - Diferencia respecto al diseño inicial: el `depositor` del evento CCTP y el `messageSender` del mensaje son **el router**, no el pagador. El pagador se acredita con el evento `CrosschainPayment(paymentId, payer, …)` del router, que el worker exige (exactamente uno, con el `paymentId` y el importe del pago).
 
-#### `TilcaiPaymaster` (fase 3 · Saul + Jose)
+#### Contratos de la fase SCA (Saul + Jose)
 
-- Paymaster de verificación ERC-4337 (EntryPoint v0.7/v0.8; fijar la versión y verificar el despliegue canónico en Fuji).
-- `validatePaymasterUserOp` exige una firma de TilcAI (`signer` de política) sobre `(userOpHash, validUntil, validAfter, principalId, maxCost)`. TilcAI solo firma si la UserOp ejecuta un **batch permitido**: `USDC.approve(TokenMessengerV2, x)` + `depositForBurnWithHook(…)` hacia el forwarder con un `payTo` registrado.
-- Límites por principal y por día en el backend (contabilidad) y `maxCost` en la firma (on-chain).
-- Depósito en el EntryPoint fondeado y monitorizado (§9.4). Retiradas solo por el owner multifirma.
+Detalle en [[TILCAI_FASE_SCA_EMISION_DE_CUENTAS_2026-10-06#6. Cuenta en EVM|fase SCA §6]]. Todos sobre OpenZeppelin Contracts 5.7.0 y EntryPoint v0.9.
+
+| Contrato | Diseño |
+| --- | --- |
+| `TilcaiCctpRouterV2` | El router actual con la variante `bytes signature` de EIP-3009. El USDC comprueba la firma con `isValidSignature` de la cuenta. Mismo nonce ligado a la ruta y mismo evento `CrosschainPayment` |
+| `TilcaiAccount` | `Account` de OpenZeppelin con ERC-7739 (firmas ERC-1271 no reutilizables entre cuentas) y ERC-7821 (ejecución en lote). Dueño con passkey (`SignerWebAuthn`, precompilado P-256) o EOA |
+| `TilcaiAccountFactory` | CREATE2 con el salt derivado de la clave del dueño (ADR-11). Despliega al crear la cuenta, porque ERC-1271 necesita código |
+| `TilcaiSessionPolicy` | Límites de la clave del agente: solo el lote `USDC.approve(TokenMessengerV2, x)` + `depositForBurnWithHook(…)` hacia el forwarder, `payTo` en lista, tope por llamada y por periodo, vencimiento |
+
+#### `TilcaiPaymaster` (aplazado, ADR-12)
+
+- No hace falta mientras el Relayer envíe las UserOps con tarifa cero.
+- Vuelve si hay que aceptar bundlers de terceros. Base: `PaymasterSigner` de OpenZeppelin Contracts. Firmaría solo el lote permitido, con `validUntil` corto y cupo por tenant.
 
 #### ERC-8004 (fase 4 · Omar)
 
@@ -460,11 +511,14 @@ No se escriben contratos propios si existe un despliegue reconocido en el testne
 
 | Contrato | Fase | Diseño |
 | --- | --- | --- |
-| Smart account (reutilizado) | 3 | OpenZeppelin `stellar-contracts` versión fijada. Firmante admin: passkey/ed25519 del principal. Firmante delegado: clave del componente firmante de TilcAI, ligada a una regla de contexto restringida |
-| `tilcai_spend_policy` | 3 | Política instalada en la regla del firmante delegado. Permite **solo** `transfer` del SAC configurado hacia `payTo` en lista; límite por llamada y por periodo (ventana fija en ledgers, como el mandato §16.3 del informe); expiración por ledger; sin subinvocaciones. Rechaza `add_signer`, `remove_signer`, `upgrade`, cambios de regla y cualquier otro contrato |
+| `tilcai_account` | SCA · **implementado** (2 tests), sin desplegar | Envoltorio de `stellar_accounts::smart_account` 0.7.2. El constructor crea la regla `owner` (`Default`) con los firmantes del dueño: passkey o ed25519, como firmantes externos. No actualizable |
+| `tilcai_ed25519_verifier`, `tilcai_webauthn_verifier` | SCA · compilan | Verificadores de OpenZeppelin, sin estado. Uno por red, compartidos por todas las cuentas |
+| `tilcai_spending_limit_policy` | SCA · compila | Política de límite de OpenZeppelin: ventana móvil en ledgers. Solo en reglas `CallContract(<token>)` |
+| `tilcai_account_factory` | SCA · M2 | Despliega cuentas en una dirección derivada de la clave del dueño (ADR-11) |
+| `tilcai_spend_policy` | SCA · M3 | Política propia en la regla del agente. Permite **solo** `transfer` del SAC configurado hacia `payTo` en lista, con tope por llamada. El tope por periodo lo pone la política de límite y el vencimiento, `valid_until` de la regla. La regla es `CallContract(<SAC>)`, así que el agente no puede llamar a la cuenta para cambiar firmantes o reglas ni a ningún otro contrato |
 | `tilcai_budget` | 3–5 | Opcional. Presupuesto raíz on-chain compartido por varias cuentas o mandatos: `hold(order, amount)`, `consume`, `release` con autorización del gateway. Solo se despliega si el presupuesto off-chain atómico no basta (informe §21.4) |
 
-Pruebas obligatorias (Rust `soroban-sdk` testutils): camino positivo, monto excedido, destinatario fuera de lista, periodo agotado, expiración, invocación anidada maliciosa, intento de administración con el firmante delegado y revocación por el admin.
+Pruebas obligatorias (Rust `soroban-sdk` testutils): camino positivo, monto excedido, destinatario fuera de lista, periodo agotado, expiración, invocación anidada maliciosa, intento de administración con la clave del agente y revocación por el dueño.
 
 ### 8.3 Contratos de terceros usados (sin modificar)
 
@@ -472,6 +526,8 @@ Pruebas obligatorias (Rust `soroban-sdk` testutils): camino positivo, monto exce
 | --- | --- | --- |
 | Fuji | USDC | `0x5425890298aed601595a70AB815c96711a31Bc65` |
 | Fuji | TokenMessengerV2 / MessageTransmitterV2 | `0x8FE6B999…2DAA` / `0xE737e5cE…E275` |
+| Fuji | EntryPoint v0.9 (ERC-4337) | `0x433709009B8330FDa32311DF1C2AFA402eD8D009` (verificada 2026-10-06) |
+| Fuji | Precompilado P-256 (secp256r1) | `0x0000000000000000000000000000000000000100` (verificada 2026-10-06) |
 | Stellar | USDC SAC / emisor | `CBIELTK6…DAMA` / `GBBD47IF…FLA5` |
 | Stellar | TokenMessengerMinter / MessageTransmitter / CctpForwarder | `CDNG7HXA…RTHP` / `CBJ6MTCK…VVJY` / `CA66Q2WF…VSZ` |
 | Stellar | SAC XLM nativo (riel x402 probado) | `CDLZFC3S…CYSC` |
@@ -482,9 +538,9 @@ Pruebas obligatorias (Rust `soroban-sdk` testutils): camino positivo, monto exce
 
 | Relayer (id) | Red | Uso | Fase |
 | --- | --- | --- | --- |
-| `stellar-example` (renombrar `stellar-testnet`) | Stellar Testnet | Plugin x402 (`/verify`, `/settle`) · `mint_and_forward` CCTP · despliegue de smart accounts y reglas (fee sponsor) | 1 ✔ / 2 / 3 |
-| `avalanche-fuji-relayer` | Fuji | Envío de `TilcaiCctpRouter.payWithAuthorization` (cuenta `0xcc0bbfaf…d6f5`) · escrituras ERC-8004 si se elige Fuji | 1 ✔ / 4 |
-| *(bundler)* | Fuji | El Relayer **no** es bundler 4337. Bundler separado (p. ej. Alto o un proveedor) | 3 |
+| `stellar-example` (renombrar `stellar-testnet`) | Stellar Testnet | Plugin x402 (`/verify`, `/settle`) · `mint_and_forward` CCTP · despliegue de cuentas (`upload_wasm`, `create_contract`, factory) y envío de reglas y pagos firmados (`auth: xdr`) | 1 ✔ / 2 / SCA |
+| `avalanche-fuji-relayer` | Fuji | Envío de `TilcaiCctpRouter.payWithAuthorization` (cuenta `0xcc0bbfaf…d6f5`) · despliegue de cuentas por la factory · `EntryPoint.handleOps` con UserOps de tarifa cero (ADR-12) · escrituras ERC-8004 si se elige Fuji | 1 ✔ / SCA / 4 |
+| *(bundler)* | Fuji | El Relayer **no** tiene función de bundler 4337. No se usa uno externo mientras rija ADR-12 | — |
 
 ### 9.2 Contrato de integración (implementado en `modules/relayer/client.ts`)
 
@@ -513,27 +569,29 @@ Pendientes heredados de `payment-rail-environment.md` §8, con responsable Saul:
 | --- | --- | --- |
 | Firmante Stellar del Relayer | XLM para comisiones (≈ 0,002 XLM por liquidación x402; el mint CCTP cuesta más recursos Soroban) | Saldo < 50 XLM en testnet |
 | Firmante EVM del Relayer (Fuji) | AVAX para el router | Saldo < 0,5 AVAX |
-| Depósito del paymaster en EntryPoint | AVAX | Saldo < N UserOps estimadas |
+| Depósito del paymaster en EntryPoint | No aplica mientras rija ADR-12: el gas de las UserOps sale del firmante EVM del Relayer | — |
 | Clave de desarrollo (`DEV_EVM_PAYER_PRIVATE_KEY`) | USDC + AVAX de Fuji | Solo testnet. Nunca en producción |
 
 ## 10. Cuentas abstractas y paymasters
 
-### 10.1 Stellar: smart account del principal (fase 3 · Jose)
+> **Actualización 1.1.** Esta sección se construye en la fase SCA: [[TILCAI_FASE_SCA_EMISION_DE_CUENTAS_2026-10-06]]. TilcAI emite las cuentas también para terceros, así que la interfaz donde el dueño registra su passkey y firma puede ser la del tercero. TilcAI recibe solo claves públicas y firmas (ADR-10).
+
+### 10.1 Stellar: smart account del principal (fase SCA · Jose)
 
 #### 10.1.1 Creación
 
 1. El usuario se autentica en la interfaz de control y registra una **passkey** (WebAuthn, secp256r1) o una clave ed25519 propia. TilcAI nunca ve la semilla.
-2. TilcAI construye el despliegue de la smart account (contrato OZ fijado) con el firmante admin = credencial del usuario. La dirección `C…` es determinista por `salt = sha256(principalId ‖ índice)`.
+2. TilcAI construye el despliegue de `tilcai_account` con la credencial del usuario como único firmante. La factory deriva la dirección `C…` de esa credencial y de `salt = sha256(tenantId ‖ externalRef ‖ índice)` (ADR-11).
 3. El **Relayer** envía y paga el despliegue (patrocinio de comisiones). El usuario no necesita XLM.
 4. Trustline: una cuenta de contrato **no** necesita trustline para mantener USDC vía SAC. El fondeo es una acción separada y autorizada (informe §12.9.7).
-5. TilcAI guarda `smart_accounts(principal_id, address, wasm_hash, version, admin_signer, created_tx)`.
+5. TilcAI guarda la cuenta en `smart_accounts`: tenant, referencia del tercero, dirección, dueño, hash del wasm y envío del despliegue.
 
 #### 10.1.2 Delegación limitada
 
 1. El usuario crea un mandato en la interfaz (informe §16.3).
 2. TilcAI traduce lo que la cuenta **puede** verificar on-chain a una regla de contexto: SAC USDC, `payTo` en lista, límite por llamada y por periodo, vencimiento. Lo comercial (servicio, negocio) se queda en el gateway (informe §12.6).
 3. El usuario firma con su passkey la transacción `add_context_rule` / política. El Relayer la envía.
-4. El firmante delegado es una clave en `signers/`, separada de la API y del modelo, que solo firma auth entries cuyo `actionHash` coincide con una intención aprobada por política.
+4. La clave del agente la guarda el tercero (ADR-10) y entra en la regla como firmante externo. Cuando existan los mandatos de la fase 2, TilcAI podrá alojar esa clave en `signers/`, separada de la API y del modelo, para firmar solo auth entries cuyo `actionHash` coincida con una intención aprobada por política.
 
 #### 10.1.3 Revocación y recuperación
 
@@ -544,19 +602,20 @@ Pendientes heredados de `payment-rail-environment.md` §8, con responsable Saul:
 #### 10.1.4 Pago desde la smart account
 
 - **Vía x402** si el plugin acepta credenciales de dirección de contrato (§7.1.5).
-- **Vía directa** si no las acepta: TilcAI construye `transfer(C…, payTo, amount)`, el firmante delegado firma la auth entry y el Relayer la envía con su cuenta como fuente (modo `transaction_xdr`, o «gas abstraction» de la API del Relayer con `signed_auth_entry`). Verificar en la versión fijada del Relayer. Se concilia igual que x402.
+- **Vía directa** si no las acepta: TilcAI construye `transfer(C…, payTo, amount)`, el agente firma la auth entry y el Relayer la envía con su cuenta como fuente. El Relayer 1.8.0 tiene para ello el modo operaciones con `auth: xdr` y el modo `transaction_xdr` con `signed_auth_entry` (leído en su código; la prueba real es el hito M0). Se concilia igual que x402.
 
-### 10.2 EVM: pagador sin AVAX (fase 2) y smart account 4337 (fase 3)
+### 10.2 EVM: pagador sin AVAX y smart account ERC-4337 (fase SCA)
 
 | Opción | Cuándo | Cómo |
 | --- | --- | --- |
-| EOA + EIP-3009 + Router | Fase 2, cualquier wallet | El pagador firma `ReceiveWithAuthorization` (EIP-712). El Relayer EVM llama `TilcaiCctpRouter` (§8.1) |
-| Smart account 4337 + paymaster | Fase 3, cuando se quiera política en la cuenta EVM o sesión de agente en origen | UserOp con batch `approve + depositForBurnWithHook` y `paymasterAndData` firmado por TilcAI. Cuenta modular (p. ej. OZ/Safe/Kernel: elegir una, fijar versión y auditoría de referencia) |
-| EIP-7702 | Evaluar | Delegar una EOA a código de cuenta sin migrar fondos. Verificar el soporte de la red Fuji antes de considerarlo |
+| EOA + EIP-3009 + Router | Fase 1 ✔, cualquier wallet | El pagador firma `ReceiveWithAuthorization` (EIP-712). El Relayer EVM llama `TilcaiCctpRouter` (§8.1) |
+| Smart account, firma el dueño | Fase SCA (M4) | El dueño firma el mismo `ReceiveWithAuthorization` con su passkey. `TilcaiCctpRouterV2` lo presenta con firma `bytes` y el USDC la comprueba por ERC-1271 |
+| Smart account, firma el agente | Fase SCA (M5) | UserOp de la clave de sesión con el lote `approve + depositForBurnWithHook`. `TilcaiSessionPolicy` aplica los límites. El Relayer la envía por `EntryPoint.handleOps` (ADR-12) |
+| EIP-7702 | Descartado por ahora | Avalanche no lo tiene: ACP-209 figura como propuesta (consultado el 2026-10-06) |
 
-**Creación de la cuenta 4337:** dirección contrafactual calculada por la factory (`EvmSmartAccountProvider.addressFor`). El despliegue ocurre con la primera UserOp (initCode), patrocinada por el paymaster. La clave owner es del usuario (passkey vía WebAuthn si la cuenta lo soporta, o EOA). TilcAI solo aporta la firma del paymaster.
+**Creación de la cuenta:** la factory calcula la dirección a partir de la clave del dueño (`SmartAccountProvider.addressFor`) y el Relayer la despliega al crearla, con una transacción normal. No se deja para la primera UserOp porque el USDC solo puede comprobar una firma ERC-1271 si la cuenta ya tiene código. La clave del dueño es del usuario: passkey verificada con el precompilado P-256 de Fuji, o EOA.
 
-**Paymaster:** §8.1. El backend aplica la política (`PaymasterProvider.sponsor`): objetivo permitido, importe ≤ mandato, principal con cupo y `validUntil` corto (≤ 10 min).
+**Patrocinio:** lo decide el backend antes de enviar: cuenta emitida por TilcAI, operación simulada, lote permitido y tenant con cupo. No hay paymaster mientras rija ADR-12.
 
 ### 10.3 Patrocinio de comisiones en Stellar
 
@@ -566,7 +625,7 @@ El «paymaster» de Stellar es el Relayer. Hay tres modos:
 2. **Fee-bump** (`transaction_xdr` firmado + `fee_bump: true`): el usuario firma su transacción y el Relayer paga envolviéndola.
 3. **x402 `areFeesSponsored`**: el plugin reconstruye la transacción con el Relayer como fuente.
 
-Límites del patrocinio: tope de comisión por transacción (`max_fee`), cuota diaria por principal en el backend y alerta de saldo (§9.4). Patrocinar no da al Relayer autoridad sobre el saldo del usuario (informe §12.11).
+Límites del patrocinio: tope de comisión por transacción (`max_fee`), cuota diaria por tenant (ADR-13) y por principal en el backend, y alerta de saldo (§9.4). Patrocinar no da al Relayer autoridad sobre el saldo del usuario (informe §12.11).
 
 ## 11. Identidad y ERC-8004
 
@@ -599,9 +658,9 @@ ERC-8004 está en estado **Draft**. Las firmas de funciones se fijan con la vers
 
 Implementado (crosschain): §14.5. Fase 2 añade, con la misma convención (`Idempotency-Key` en mutaciones, errores `tilcai-shared-v1`, importes atómicos como string):
 
-`/v1/businesses`, `/v1/services/{id}/availability`, `/v1/quotes`, `/v1/intents`, `/v1/intents/{id}/prepare`, `/v1/approvals` (superficie de la persona), `/v1/purchases`, `/v1/orders/{id}`, `/v1/orders/{id}/cancel`, `/v1/budgets/{ref}`, `/v1/receipts?orderId=`, `/v1/mandates` (crear/pausar/revocar), `/v1/accounts/stellar` (crear smart account), `/v1/webhooks/relayer`.
+`/v1/businesses`, `/v1/services/{id}/availability`, `/v1/quotes`, `/v1/intents`, `/v1/intents/{id}/prepare`, `/v1/approvals` (superficie de la persona), `/v1/purchases`, `/v1/orders/{id}`, `/v1/orders/{id}/cancel`, `/v1/budgets/{ref}`, `/v1/receipts?orderId=`, `/v1/mandates` (crear/pausar/revocar), `/v1/webhooks/relayer`. La fase SCA añade `/v1/accounts` y `/v1/accounts/{id}/delegations` para las dos redes ([[TILCAI_FASE_SCA_EMISION_DE_CUENTAS_2026-10-06#7. Backend: terceros, datos y API|fase SCA §7.3]]).
 
-Autenticación: fase 1 con claves de servicio (Bearer). Fase 2 con OAuth 2.1/OIDC para personas y clientes MCP. Tokens con `aud` = TilcAI y scopes `tilcai:*` (`tilcai-core/docs/mcp-intent-mandate.md`). Sin reenvío de tokens a terceros.
+Autenticación: fase 1 con claves de servicio (Bearer). Fase SCA con claves por tenant, permisos y cuotas (ADR-13). Fase 2 con OAuth 2.1/OIDC para personas y clientes MCP. Tokens con `aud` = TilcAI y scopes `tilcai:*` (`tilcai-core/docs/mcp-intent-mandate.md`). Sin reenvío de tokens a terceros.
 
 ### 12.2 MCP (fase 2 · Omar)
 
@@ -636,9 +695,11 @@ flowchart LR
 | --- | --- | --- | --- |
 | API key del Relayer | `.env` de tilcai (600) | Enviar transacciones con las cuentas del Relayer | Rotar y reiniciar ambos servicios |
 | Keystore Stellar del Relayer | Host del Relayer | Pagar comisiones. Sin poder sobre fondos de usuarios | Nueva cuenta + friendbot/fondeo; actualizar `signers` |
-| Keystore EVM del Relayer | Host del Relayer | Gas del router; escrituras ERC-8004 patrocinadas | Firmante distinto del de mainnet (§9.3) |
-| Firmante de política del paymaster | `signers/` (KMS en producción) | Autorizar patrocinio hasta `maxCost` | Rotación con `setSigner` del paymaster (owner multifirma) |
-| Firmante delegado Stellar | `signers/` | Gastar dentro de la regla on-chain del usuario | El usuario revoca la regla; TilcAI bloquea en el gateway |
+| Keystore EVM del Relayer | Host del Relayer | Gas del router, de los despliegues de cuentas y de las UserOps; escrituras ERC-8004 patrocinadas | Firmante distinto del de mainnet (§9.3) |
+| Firmante de política del paymaster | No existe mientras rija ADR-12 | — | — |
+| Credencial del dueño de una cuenta | Dispositivo del usuario (passkey) o su wallet. TilcAI solo tiene la clave pública | Todo sobre su cuenta | Segunda credencial registrada por el dueño |
+| Clave del agente (Stellar y EVM) | El tercero, en su backend (ADR-10) | Gastar dentro de la regla on-chain que firmó el dueño | El dueño revoca la regla; TilcAI bloquea en el gateway |
+| Claves de API de tenants | El tercero. TilcAI guarda el hash | Pedir cuentas y pagos dentro de su cuota | Revocar la clave; la cuota limita el gasto del Relayer |
 | `DEV_EVM_PAYER_PRIVATE_KEY` | `.env` de desarrollo | Fondos de testnet del equipo | Solo testnet. Prohibida en producción (la config solo admite `testnet`) |
 | Claves de oferta de negocios | Del negocio | Firmar cotizaciones | Revocación en el perfil; ofertas con la clave revocada se rechazan |
 
@@ -758,12 +819,14 @@ Fases pendientes de cierre: reproducción por un segundo integrante, y el cambio
 
 ## 15. Roadmap por fases
 
-Relación con el informe 2.0: la fase 1 de este plan es nueva (crosschain). Las fases 2–5 corresponden a las fases 1–5 del informe, reagrupadas por dependencias técnicas.
+Relación con el informe 2.0: la fase 1 de este plan es nueva (crosschain). Las fases 2–5 corresponden a las fases 1–5 del informe, reagrupadas por dependencias técnicas. La **fase SCA** (2026-10-06) adelanta la account abstraction de la fase 3 y le suma la emisión para terceros. No depende de la fase 2.
 
 ```mermaid
 flowchart LR
     F1["F1 · Crosschain Fuji → Stellar ✔"] --> F2["F2 · Compra aprobada (x402 USDC + órdenes + MCP + router sin gas)"]
-    F2 --> F3["F3 · AA: smart accounts, delegación, paymaster"]
+    F1 --> SCA["Fase SCA · emisión de cuentas para agentes y terceros (M0–M7)"]
+    F2 --> F3["F3 · Delegación ligada a mandatos, sobre las cuentas de la fase SCA"]
+    SCA --> F3
     F3 --> F4["F4 · ERC-8004 + A2A + 2.º cliente"]
     F4 --> F5["F5 · Scheduler, devoluciones, piloto, preparación mainnet"]
 ```
@@ -792,15 +855,20 @@ flowchart LR
 | ~~`TilcaiCctpRouter` (EIP-3009) + Relayer EVM~~ (adelantado a la fase 1 ✔) | Saul + Jose | Auditoría de revisión cruzada pendiente |
 | Webhook del Relayer + endurecimiento §9.3 | Saul | Webhook falso rechazado; reinicio del Relayer no pierde el registro |
 
-### 15.3 Fase 3 — Account abstraction y delegación
+### 15.3 Fase 3 — Account abstraction y delegación (adelantada como fase SCA)
 
-| Entregable | Responsable | Criterio |
-| --- | --- | --- |
-| Smart account Stellar (passkey) creada con fee sponsor | Jose | Usuario sin XLM crea su cuenta |
-| `tilcai_spend_policy` + firmante delegado | Jose + Jhamil | Compra delegada liquida; administración, destinatario o importe fuera de regla → rechazados on-chain |
-| Compatibilidad x402 ↔ smart account (o ruta directa §10.1.4) | Saul + Jose | Prueba documentada del camino elegido |
-| ERC-4337 en Fuji: cuenta + bundler + `TilcaiPaymaster` | Saul + Jose | UserOp patrocinada para el batch permitido; UserOp con otro objetivo → no patrocinada |
-| Revocación con pagos en vuelo y ejercicio de recuperación | Jose | Procedimiento probado (informe §24.1) |
+La emisión de cuentas, la delegación on-chain y el envío de UserOps se construyen en la fase SCA. Hitos, criterios de aceptación y responsables: [[TILCAI_FASE_SCA_EMISION_DE_CUENTAS_2026-10-06#8. Hitos|fase SCA §8]].
+
+| Entregable | Dónde queda |
+| --- | --- |
+| Compatibilidad x402 ↔ smart account (o ruta directa §10.1.4) | Fase SCA, M0 |
+| Terceros: tenants, claves y cuotas | Fase SCA, M1 |
+| Smart account Stellar (passkey) creada con fee sponsor | Fase SCA, M2 |
+| `tilcai_spend_policy` + clave del agente | Fase SCA, M3 |
+| ERC-4337 en Fuji: cuenta, router v2 y envío de UserOps, sin bundler externo ni paymaster (ADR-12) | Fase SCA, M4 y M5 |
+| Revocación con pagos en vuelo y ejercicio de recuperación | Fase SCA, M3 y M5 |
+| Piloto con Optus | Fase SCA, M6 |
+| Delegación ligada a mandatos: firmante alojado en `signers/`, `actionHash`, presupuesto | Fase 3, después de la fase 2 (Jose + Omar) |
 
 ### 15.4 Fase 4 — Identidad interoperable y A2A
 
@@ -818,7 +886,7 @@ Scheduler idempotente bajo mandato, devoluciones (incluida Stellar → EVM por C
 
 ### 15.6 Preparación para mainnet (puerta, no fase)
 
-Auditoría de `TilcaiCctpRouter`, `TilcaiPaymaster` y `tilcai_spend_policy`; claves en KMS/HSM; firmantes separados por entorno; revisión legal de custodia (informe §12.16); límites operativos; runbooks ensayados en testnet (caída del Relayer, compromiso de clave de negocio, revocación con pago en vuelo). `TILCAI_ENV` solo admite `mainnet` cuando todo esto esté cerrado.
+Auditoría de `TilcaiCctpRouter` y de los contratos propios de la fase SCA (router v2, `TilcaiAccount`, factories, `TilcaiSessionPolicy`, `tilcai_spend_policy`); claves en KMS/HSM; firmantes separados por entorno; revisión legal de custodia (informe §12.16); límites operativos; runbooks ensayados en testnet (caída del Relayer, compromiso de clave de negocio, revocación con pago en vuelo). `TILCAI_ENV` solo admite `mainnet` cuando todo esto esté cerrado.
 
 ### 15.7 Actualización de `tilcai-web`
 
@@ -841,23 +909,27 @@ El roadmap público (`src/lib/content/roadmap.ts`) solo cambia con evidencia. Tr
 | # | Riesgo / pregunta | Mitigación / decisión pendiente | Responsable |
 | --- | --- | --- | --- |
 | 1 | ~~Formato de `args` ScVal del Relayer para `bytes`~~ | Resuelto: `{bytes: hex}` aceptado en el mint real | Saul |
-| 2 | El plugin x402 rechaza credenciales de smart account | Ruta directa §10.1.4 o contribución al plugin | Saul + Jose |
+| 2 | El plugin x402 rechaza credenciales de smart account | Su código acepta credenciales de dirección; falta la prueba real (fase SCA, M0). Alternativa: ruta directa §10.1.4 o contribución al plugin | Saul + Jose |
 | 3 | El router es código propio sin auditar | Revisión cruzada + fuzz/invariantes antes de cualquier uso con valor; sin owner ni upgrades | Saul + Jose |
 | 4 | Registros ERC-8004: ¿hay un despliegue canónico en testnet? | Si no, desplegar la referencia sin cambios | Omar |
-| 5 | Bundler 4337 propio o de proveedor | Decidir en la fase 3 por coste y control | Saul + Jose |
+| 5 | ~~Bundler 4337 propio o de proveedor~~ | Resuelto por ADR-12: el Relayer envía `handleOps`. Falta confirmar la tarifa cero en Fuji (fase SCA, M0) | Saul |
 | 6 | Un solo host = un punto de fallo | Durabilidad y conciliación; réplica fría de la base de datos | Equipo |
 | 7 | Cambios de política de Circle (fees, límites, deny list) | Fee consultada por cotización; burns con `maxFee` y verificación del importe recibido | Saul |
-| 8 | Custodia: firmante delegado y firmante del paymaster | Documentar poderes reales antes de fondos reales (informe §12.16) | Jose |
+| 8 | Custodia: qué puede hacer TilcAI sobre una cuenta emitida (ADR-10) y, más adelante, el firmante alojado | Documentar poderes reales antes de fondos reales (informe §12.16) | Jose |
 | 9 | El comercio elimina la trustline del `payTo` después del burn | El mint espera y reintenta; alerta `PAYTO_TRUSTLINE_MISSING` | Saul |
+| 10 | Las políticas, las factories y el router v2 de la fase SCA son código propio sin auditar | Revisión cruzada, fuzz y auditoría antes de mainnet (§15.6) | Saul + Jose |
+| 11 | Archivado de estado en Soroban: una cuenta sin uso hay que restaurarla antes de operar | El worker extiende el TTL o el Relayer restaura. Diseñar en el hito M2 | Jose |
+| 12 | Una UserOp que falla on-chain cuesta gas al Relayer | Simulación previa, solo cuentas emitidas por TilcAI, cuota por tenant | Saul |
 
 ## 18. Referencias
 
 - Informe de producto: [[TILCAI_NUEVO_RUMBO_COMERCIO_AGENTICO_2026-09-29]].
+- Fase SCA (emisión de cuentas, hechos verificados e hitos): [[TILCAI_FASE_SCA_EMISION_DE_CUENTAS_2026-10-06]].
 - `tilcai-core`: `docs/shared-contracts.md`, `docs/mcp-intent-mandate.md`, `docs/payment-rail-environment.md`, `docs/payment-rail-reproducibility.md`.
 - `tilcai-cctp-engine`: `docs/CROSSCHAIN-USDC.md` (contratos, layouts, fees y flujos verificados).
 - `tilcai-infrastructure`: `README.md` y código de la fase 1.
 - Circle CCTP: https://developers.circle.com/cctp · contratos Stellar: https://developers.circle.com/cctp/references/stellar-contracts · `circlefin/stellar-cctp` (`MessageTransmitter.is_nonce_used(BytesN<32>)`, `CctpForwarder.mint_and_forward(message, attestation)` sin auth).
 - OpenZeppelin Relayer: https://docs.openzeppelin.com/relayer · modelos Stellar en `OpenZeppelin/openzeppelin-relayer` (`src/models/transaction/request/stellar.rs`, `…/stellar/operation.rs`).
 - x402 en Stellar: https://developers.stellar.org/docs/build/agentic-payments/x402 · facilitador OZ: https://docs.openzeppelin.com/relayer/1.5.x/guides/stellar-x402-facilitator-guide.
-- Smart accounts: https://docs.openzeppelin.com/stellar-contracts/accounts/smart-account · https://developers.stellar.org/docs/build/guides/contract-accounts.
+- Smart accounts: https://docs.openzeppelin.com/stellar-contracts/accounts/smart-account · https://developers.stellar.org/docs/build/guides/contract-accounts · auditoría del RC v0.7.0: https://www.openzeppelin.com/news/stellar-contracts-rc-v0.7.0-audit · cuentas en OpenZeppelin Contracts: https://docs.openzeppelin.com/contracts/5.x/accounts.
 - ERC-8004 (Draft): https://eips.ethereum.org/EIPS/eip-8004 · ERC-4337: https://eips.ethereum.org/EIPS/eip-4337 · EIP-3009: https://eips.ethereum.org/EIPS/eip-3009.
