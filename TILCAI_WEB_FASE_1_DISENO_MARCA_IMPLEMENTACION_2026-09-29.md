@@ -17,6 +17,8 @@ related: "[[TILCAI_NUEVO_RUMBO_COMERCIO_AGENTICO_2026-09-29]]"
 
 # TilcAI — implementación web y marca · Fase 1
 
+> **Vigencia:** esta es la dirección visual original del 29/09. Para ordenar el relato del pitch y distinguir simulación de evidencia viva, ver el [contexto oficial](0-OFICIAL/CONTEXTO_OFICIAL_TILCAI.md) y la [infraestructura integrada](2-ARQUITECTURA/TILCAI_FLUJO_INTEGRADO_Y_DEMO_2026-10-08.md).
+
 **Documento de diseño, contenido e implementación.**  
 **Equipo:** Omar · Jhamil · Saul · Jose.  
 **Proyecto que se actualizará:** `1_PROYECTO/IDEA-PROJECT/TilcAI/tilcai-web/`.  

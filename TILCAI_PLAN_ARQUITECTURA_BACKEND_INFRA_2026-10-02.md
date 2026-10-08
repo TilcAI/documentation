@@ -19,6 +19,8 @@ aliases:
 
 # TilcAI — plan y arquitectura del backend y la infraestructura
 
+> **Vigencia:** este plan fechado conserva ADR y diseño detallado. Para el estado del 8/10 y la construcción de la demo, leer primero el [contexto oficial](0-OFICIAL/CONTEXTO_OFICIAL_TILCAI.md) y las [issues propuestas](3-CONSTRUCCION/ISSUES_PROPUESTAS_2026-10-08.md). Una fase descrita aquí no acredita por sí sola código fusionado o una compra integrada.
+
 **Alcance:** todo lo necesario para llevar el backend y la infraestructura de TilcAI al 100 %: contratos (EVM y Soroban), x402, relayers, ERC-8004, transacciones crosschain, creación de cuentas abstractas (AA) y paymasters.
 **Base:** [[TILCAI_NUEVO_RUMBO_COMERCIO_AGENTICO_2026-09-29|informe de producto 2.0]], `tilcai-core` (contratos compartidos, MCP, riel x402 probado), `tilcai-cctp-engine` (laboratorio CCTP verificado on-chain) y `tilcai-web` (arquitectura publicada).
 **Código:** `tilcai-infrastructure/` (nuevo). La **fase 1** de este plan —pagos USDC de Avalanche a Stellar, con el gas de ambas redes pagado por el relayer— está implementada y **verificada con transferencias reales en testnet** (§14.6).

@@ -15,6 +15,8 @@ aliases:
 
 # TilcAI — infraestructura de comercio entre agentes sobre Stellar
 
+> **Vigencia:** visión y plan de producto del 29/09. La definición de trabajo, el estado comprobado y el recorrido de la presentación del 10/10 están en el [contexto oficial](0-OFICIAL/CONTEXTO_OFICIAL_TILCAI.md); las [issues propuestas](3-CONSTRUCCION/ISSUES_PROPUESTAS_2026-10-08.md) siguen pendientes de revisión.
+
 **Informe de producto, arquitectura y plan de construcción.**  
 **Equipo:** Omar · Jhamil · Saul · Jose.  
 **Versión:** 2.0 · 29 de septiembre de 2026.

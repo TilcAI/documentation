@@ -17,6 +17,8 @@ aliases:
 
 # TilcAI — fase SCA: emisión de cuentas abstractas para agentes y terceros
 
+> **Vigencia:** este es el plan técnico de cuentas, no una API de emisión ya terminada. Ver el [contexto oficial](0-OFICIAL/CONTEXTO_OFICIAL_TILCAI.md) para el estado de hoy y las [issues propuestas](3-CONSTRUCCION/ISSUES_PROPUESTAS_2026-10-08.md) antes de asignar trabajo.
+
 **Alcance:** que TilcAI emita y patrocine *smart contract accounts* (SCA) en Stellar y en EVM para sus propios agentes y para empresas y PYMES integradoras, con un dueño que nunca es TilcAI y un agente con límites verificados on-chain.
 **Base:** [[TILCAI_PLAN_ARQUITECTURA_BACKEND_INFRA_2026-10-02|plan de arquitectura]] (v1.1, ADR-06, ADR-07 y ADR-10 a ADR-13) e [[TILCAI_NUEVO_RUMBO_COMERCIO_AGENTICO_2026-09-29|informe de producto 2.0]] §12.
 **Código:** `tilcai-infrastructure/` (`contracts/soroban`, `contracts/evm`, `src/modules/accounts`, `src/modules/tenants`).
