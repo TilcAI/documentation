@@ -388,7 +388,8 @@ Lo que sigue describe lo fusionado en `main` de `tilcai-infrastructure` el 2026-
 | M1 · autenticación por tercero y API de cuentas | **Implementado en `main`**; pendiente de revisión de su responsable (#9) | Pruebas de permisos y de aislamiento entre terceros |
 | M4 · `TilcaiAccount`, factory, router v2 y modo `account` | **Implementado y desplegado en Fuji** | Factory `0x55a5b0ed47c5dfb168cfe2b431a56455576d51b8`, router v2 `0x09483803916e6cb2027741c9287361ad55507a66`; un pago en modo `account` quedó `SETTLED` en Stellar Testnet |
 | M5 · `TilcaiSessionPolicy`, UserOps, modo `account_agent` | **Pendiente** | La cuenta ya valida UserOps; no hay reglas de sesión ni envío por `handleOps` |
-| M2–M3 · Stellar | **Pendiente** | — |
+| M2 · Stellar: factory, verificadores y emisión | **Implementado y desplegado en Stellar Testnet** (ver §13 ter) | `npm run stellar -- verify-account` |
+| M3 · Stellar: política de agente y delegación | **Pendiente** | La cuenta admite reglas por contrato; falta `tilcai_spend_policy` y su flujo |
 
 Decisiones tomadas al implementar, que cierran puntos que §6 dejaba abiertos:
 
@@ -399,7 +400,29 @@ Decisiones tomadas al implementar, que cierran puntos que §6 dejaba abiertos:
 - **Quién ve qué.** Las claves de `TILCAI_API_KEYS` son las del operador (permiso `payments` y acceso al vault, al registro de eventos y al relayer). Las claves de un tercero (`npm run tenant -- key`) solo ven sus cotizaciones, pagos y cuentas. Solo paga con una cuenta el tercero al que se le emitió.
 - **Un despliegue no se da por perdido.** La cuenta queda `DEPLOYING`, se reintenta con espera creciente y avisa al panel al tercer rechazo; pasa a `ACTIVE` cuando la dirección tiene código, la haya desplegado quien sea.
 
-Sigue pendiente de lo que este documento plantea: delegación a agentes (M5), recuperación (el contrato permite `setOwner`, sin flujo), cuentas en Stellar, cliente TypeScript y OpenAPI (M7) y **auditoría**: los contratos no están auditados y todo es testnet.
+Sigue pendiente de lo que este documento plantea: delegación a agentes (M5), recuperación (el contrato permite `setOwner`, sin flujo), cliente TypeScript y OpenAPI (M7) y **auditoría**: los contratos no están auditados y todo es testnet. La emisión en Stellar quedó hecha el mismo día (§13 ter).
+
+## 13 ter. Estado de la parte Stellar al 2026-10-09
+
+Cierra M2 y suma el vault de USDC en Stellar, a pedido de Saul. Código en `tilcai-infrastructure` (`contracts/soroban/account-factory`, `contracts/soroban/vault`, `src/modules/accounts/stellar`, `src/modules/vault/adapters/stellar.ts`).
+
+| Pieza | Estado | Evidencia |
+| --- | --- | --- |
+| `tilcai_account_factory` | **Desplegada en Stellar Testnet** `CCQCZQGQTUESUBMBPKQWHDZYKAVKFIL3VHZGV2YRCJ4Q7AYA5OWRU2ZB`; 7 tests de Soroban | `npm run stellar -- verify-account`: el relayer desplegó una cuenta en la dirección calculada antes, y su regla `owner` solo guarda la clave del dueño ([tx](https://stellar.expert/explorer/testnet/tx/400e7e55e3df9d1932696e936e918c2345f7ea26edd91c81c701b60e7325f715)) |
+| Emisión por API | **Verificada**: `POST /v1/accounts` con `network:"stellar:testnet"` y dueño Ed25519 o passkey; `DEPLOYING` → `ACTIVE` por el relayer | Instancia temporal contra testnet: la cuenta pasó a `ACTIVE` y recibió un desembolso |
+| `tilcai_vault` | **Desplegado** `CDQ5KG2WCKHOI5MXGNB6X4662ONAWOZUGZFA7HTG6VAZPVU7MBLOAVI6`; 10 tests de Soroban. Operador: la cuenta del relayer; 100 USDC por pago, 1000 por día | `npm run stellar -- verify-vault --pay …`: desembolso real, evento `disbursed` verificado, el mismo id no se paga dos veces ([tx](https://stellar.expert/explorer/testnet/tx/23d4ba8e22b6153eef53a3dfabb9c8fbcb9c3f9d28421a305d264de5a1ef331a)) |
+| Desembolso por API a una cuenta emitida | **Verificado**: `POST /v1/vault/disbursements {network:"stellar:testnet"}` → `CONFIRMED` con hash, y la cuenta `C…` recibió USDC sin trustline | [tx](https://stellar.expert/explorer/testnet/tx/ec15753006c7ad3b791ed9b8d360bca6252064a05f64cef82cadb5cb5b4472b7) |
+
+Decisiones al implementar:
+
+- **La factory recibe tipos primitivos** (`create_ed25519(key, salt)`, `create_webauthn(key_data, salt)`). El relayer solo acepta argumentos simples (`bytes`, `address`, `u32`, `i128`…), no estructuras: así TilcAI puede enviar la llamada sin construir XDR propio.
+- **La dirección compromete al dueño, al verificador y al tipo de clave** (`sha256(dominio ‖ tipo ‖ firmante ‖ salt)`). De la passkey solo entra el punto P-256; el `credentialId` se queda en el registro de TilcAI, para que la misma passkey dé la misma dirección.
+- **Los verificadores son contratos compartidos** que la factory guarda al construirse: la cuenta de cada tercero apunta a los mismos.
+- **El vault es gemelo del de EVM**, con los mismos nombres de error y la misma semántica. Autoriza el operador como fuente de la transacción (`auth: source_account`); la simulación detecta a quien no lo es porque pide una firma que nadie dará.
+- **Un solo servicio de desembolsos** para las dos redes (un servicio por red sobre el mismo repositorio). El contrato guarda `payout(id) → {to, amount}`, y eso, no el relayer, decide si un id se pagó; el evento da el hash mientras el nodo lo conserve (hoy, unos 7 días).
+- **Un pago a una cuenta `G…` sin trustline** se rechaza antes de enviar (`RecipientHasNoTrustline`), no se paga ni se gasta comisión.
+
+Pendiente: la regla de agente (`tilcai_spend_policy`, M3), que el tablero muestre el vault de Stellar (la foto de recursos tiene un solo vault; los desembolsos sí llegan al registro de eventos), el archivado de estado de Soroban (el vault y la factory extienden su TTL en cada llamada; una cuenta sin uso no), y la auditoría.
 
 ## 14. Referencias
 
