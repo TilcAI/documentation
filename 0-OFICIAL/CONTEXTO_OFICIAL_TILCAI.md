@@ -64,7 +64,10 @@ flowchart LR
 | MCP comprador | **Contrato de herramientas; servidor pendiente** | [Contrato MCP](https://github.com/TilcAI/tilcai-core/blob/main/docs/mcp-intent-mandate.md). Usar servicios comunes con API/canal. |
 | Agente del negocio o portal | **Por construir** | Un adaptador con catálogo/operador basta para primer flujo; portal general no bloquea demo. |
 | Router de orden y recibos de ambos lados | **Riel técnico existe; unión comercial pendiente** | Trazar `orderId` de cotización a hashes y cumplimiento. |
-| Rampa BOB ↔ USDC y mainnet | **Sin corredor/proveedor verificado** | No prometer depósito por QR ni producción en la demo testnet. |
+| Vault de desembolsos (`TilcaiVault` en Fuji) | **Implementado; verificado en testnet el 9/10** | `tilcai-infrastructure` `/v1/vault`: seis desembolsos `CONFIRMED` en la prueba E2E de Optipagos. Reproducir por otro integrante. El vault estuvo vacío el 8/10 porque la recarga llegó a la cuenta del relayer: recargar siempre el contrato. |
+| Cobro con QR Simple | **Mock; sin banco ni proveedor** | `tilcai-infrastructure` `/mock/vendis`: contrato de Vendis («QR Dinámico para Pagos» v1.3) con un botón «Simular depósito». Verificado E2E con Optipagos: QR → depósito simulado → aviso → desembolso. No mueve dinero ni prueba un corredor real. |
+| Monitorización del backend en la web | **Canal implementado y verificado en local; tablero pendiente** | [Documento](../2-ARQUITECTURA/TILCAI_MONITORIZACION_EVENTOS_BACKEND_FRONTEND_2026-10-09.md). Eventos firmados de `tilcai-infrastructure` a `tilcai-web`, vista base en `/[lang]/monitor`. Falta el tablero ([web #25](https://github.com/TilcAI/tilcai-web/issues/25)), un almacén duradero en el sitio y apuntar el relayer real a TilcAI. |
+| Rampa BOB ↔ USDC y mainnet | **Sin corredor/proveedor verificado** | No prometer depósito por QR ni producción en la demo testnet: el QR que existe es un mock. |
 
 El `main` local de `tilcai-infrastructure` contiene Fuji → Stellar y puertos de otros módulos; la preparación Docker/SCA descrita en los planes no se da por fusionada ni ejecutada. WhatsApp procede del relato de la presentación, no de inspeccionar su API privada. Las escenas de la web siguen siendo simulaciones si no consumen backend.
 

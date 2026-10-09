@@ -1,13 +1,14 @@
 # Documentación de TilcAI
 
-**Actualizada:** 8 de octubre de 2026. **Próxima presentación:** sábado 10 de octubre. Este índice es la entrada para el equipo.
+**Actualizada:** 9 de octubre de 2026. **Próxima presentación:** sábado 10 de octubre. Este índice es la entrada para el equipo.
 
 ## Leer en este orden
 
 1. **[Contexto oficial](0-OFICIAL/CONTEXTO_OFICIAL_TILCAI.md):** producto, límites, estado verificable y criterio de la demo. Si un plan antiguo afirma otro estado, comprobar el repositorio y esta matriz.
 2. **[Infraestructura integrada](2-ARQUITECTURA/TILCAI_FLUJO_INTEGRADO_Y_DEMO_2026-10-08.md):** diagramas, secuencia, wallets, rieles, cobertura de redes y pruebas.
 3. **[Incorporación de compradores](2-ARQUITECTURA/TILCAI_ADOPCION_USUARIOS_2026-10-08.md)** y **[negocios](2-ARQUITECTURA/TILCAI_ADOPCION_EMPRESAS_PYMES_2026-10-08.md):** propuestas de adopción, no funciones terminadas.
-4. **[Issues asignadas](3-CONSTRUCCION/ISSUES_PROPUESTAS_2026-10-08.md):** backlog con dependencias, aceptación y enlaces a diez issues nuevas ya creadas y asignadas en GitHub; distingue el trabajo que el equipo tenía abierto.
+4. **[Monitorización: del backend al tablero](2-ARQUITECTURA/TILCAI_MONITORIZACION_EVENTOS_BACKEND_FRONTEND_2026-10-09.md):** qué eventos registra el backend, cómo llegan firmados a `tilcai-web`, cómo se guardan e interpretan, y qué falta para el tablero.
+5. **[Issues asignadas](3-CONSTRUCCION/ISSUES_PROPUESTAS_2026-10-08.md):** backlog con dependencias, aceptación y enlaces a diez issues nuevas ya creadas y asignadas en GitHub; distingue el trabajo que el equipo tenía abierto.
 
 ## Mapa
 
