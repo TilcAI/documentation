@@ -125,3 +125,19 @@ Reanuda el trabajo de los prompts de las 07:57:54Z y 08:00:23Z, que se había de
 Reanuda el trabajo de los prompts de las 07:57:54Z y 08:00:23Z, que se había detenido por el límite de uso. No es un pedido nuevo: el resultado está en la entrada de las 07:57:54Z.
 
 **En este repositorio.** Sin cambios adicionales: lo de este repositorio está descrito en la entrada de las 07:57:54Z.
+
+## 2026-10-09T15:49:06Z · SaulChoque · Claude Code (claude-opus-5-5)
+
+- **Sesión:** https://claude.ai/code/session_018g3RyDatWoLTxJc1Ef3L4w
+- **Rama:** `main`
+- **Repositorios:** `tilcai-infrastructure`, `tilcai-web`, `documentation` (TilcAI) y `optipagos-backend`, `optipagos-frontend` (Optus)
+
+### Prompt
+
+> Genial, mergea a Main, prueba, corrige y haz push
+
+### Salida
+
+Las cinco ramas de la fase SCA se fusionaron en `main` y se subieron: tilcai-infrastructure (PR #24), tilcai-web (#27), documentation (#2), optipagos-backend (#1) y optipagos-frontend (#4). Antes de cada push se probó el resultado de la fusión: 160 pruebas unitarias y 38 de contratos en tilcai-infrastructure; 45 pruebas, `tsc` y build en tilcai-web (su `main` había avanzado; la fusión fue limpia); 373 pruebas, lint, typecheck y build en optipagos-backend; `tsc` y lint en optipagos-frontend. No hubo nada que corregir en el código. La PR #23 de tilcai-infrastructure sigue abierta en GitHub aunque sus commits ya están en `main`.
+
+**En este repositorio.** Rama `main`. Fusión de `docs/sca-evm-estado`; después se corrigieron la sección 13 bis del plan SCA y la fila del contexto oficial, que decían «sin fusionar».
