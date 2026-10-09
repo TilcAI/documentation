@@ -247,6 +247,8 @@ Las alertas se calculan de la foto:
 
 Una alerta produce **un evento cuando aparece** (`alert.raised`) y **otro cuando se resuelve** (`alert.cleared`), no uno por cada foto. La tabla `monitor_alerts` recuerda cuáles están activas aunque el proceso se reinicie.
 
+**Un vault por red (2026-10-09).** La foto de recursos lleva `vaults`: una entrada por red con vault (`eip155:43113`, `stellar:testnet`), el de Fuji primero; `vault` sigue siendo el de Fuji para un tablero anterior. Las alertas del vault de Fuji conservan su código; las de otra red llevan la red como destino, `VAULT_EMPTY:stellar:testnet`, y el tablero las muestra en la tarjeta de ese vault.
+
 `VAULT_EMPTY` existe por un caso real: el 8 de octubre el vault estuvo vacío un día entero —la recarga había llegado a la cuenta del relayer, no al contrato— y nadie lo vio porque el único síntoma era un cliente reintentando cada cinco minutos.
 
 ### 4.5 El envío al sitio

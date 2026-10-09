@@ -422,7 +422,9 @@ Decisiones al implementar:
 - **Un solo servicio de desembolsos** para las dos redes (un servicio por red sobre el mismo repositorio). El contrato guarda `payout(id) → {to, amount}`, y eso, no el relayer, decide si un id se pagó; el evento da el hash mientras el nodo lo conserve (hoy, unos 7 días).
 - **Un pago a una cuenta `G…` sin trustline** se rechaza antes de enviar (`RecipientHasNoTrustline`), no se paga ni se gasta comisión.
 
-Pendiente: la regla de agente (`tilcai_spend_policy`, M3), que el tablero muestre el vault de Stellar (la foto de recursos tiene un solo vault; los desembolsos sí llegan al registro de eventos), el archivado de estado de Soroban (el vault y la factory extienden su TTL en cada llamada; una cuenta sin uso no), y la auditoría.
+El tablero muestra el vault de Stellar junto al de Fuji (la foto de recursos lleva `vaults`, con alertas por red).
+
+Pendiente: la regla de agente (`tilcai_spend_policy`, M3), el archivado de estado de Soroban (el vault y la factory extienden su TTL en cada llamada; una cuenta sin uso no), y la auditoría.
 
 ## 14. Referencias
 
