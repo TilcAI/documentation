@@ -93,6 +93,7 @@ Las flechas a TIL-04 desde TIL-11 y a TIL-03 desde TIL-12 representan **integrac
 | [TIL-12](https://github.com/TilcAI/tilcai-infrastructure/issues/20) | Servidor MCP con herramientas de compra y autorización separada | `tilcai-infrastructure` | P1 | 01, 03 | **Omar** · [infra #20](https://github.com/TilcAI/tilcai-infrastructure/issues/20). |
 | TIL-13 | Tenants, claves, cuotas y aislamiento de negocio/cuentas | `tilcai-infrastructure` | P1 | 01 | **Seguir [infra #8](https://github.com/TilcAI/tilcai-infrastructure/issues/8) y [#9](https://github.com/TilcAI/tilcai-infrastructure/issues/9)**. |
 | [TIL-14](https://github.com/TilcAI/tilcai-infrastructure/issues/21) | Incorporar una segunda red origen CCTP con prueba E2E | `tilcai-cctp-engine` + `tilcai-infrastructure` | P1 | 04, 05 | **Saul** · [infra #21](https://github.com/TilcAI/tilcai-infrastructure/issues/21). |
+| [TIL-15](https://github.com/TilcAI/tilcai-web/issues/25) | Tablero de monitorización del backend: recursos y eventos en vivo | `tilcai-web` | P1 | — | **Jhamil** · [web #25](https://github.com/TilcAI/tilcai-web/issues/25), creada el 9/10 sobre la base ya fusionada. |
 
 ### TIL-09 · Pruebas de riesgo SCA
 
@@ -117,6 +118,10 @@ Completar almacenamiento/API de terceros, credenciales rotables, cuotas de mensa
 ### TIL-14 · Segunda red CCTP
 
 Elegir una red de las siete de laboratorio según fondos y soporte verificado; añadirla al router productivo sin alterar Fuji → Stellar. Aceptación: cotización, burn, atestación, mint y recibo E2E con hashes y ruta etiquetada; errores/reintentos siguen idempotentes. Solo entonces cambiar su etiqueta web de «laboratorio» a «verificado».
+
+### TIL-15 · Tablero de monitorización
+
+Añadida el 9 de octubre. Diseñar y construir el tablero sobre el canal que ya existe ([cómo funciona](../2-ARQUITECTURA/TILCAI_MONITORIZACION_EVENTOS_BACKEND_FRONTEND_2026-10-09.md)): alertas activas, recursos del backend en el tiempo, seguimiento de una operación por sus eventos y un almacén duradero en el sitio. Aceptación: un QR pagado y su desembolso aparecen en menos de 5 segundos sin recargar; una alerta se ve con qué hacer y desaparece al resolverse; los eventos sobreviven a un reinicio del sitio y a dos instancias; sin token no se lee nada en producción.
 
 ## Evolución prevista, pendiente de desglose después de la demo
 
