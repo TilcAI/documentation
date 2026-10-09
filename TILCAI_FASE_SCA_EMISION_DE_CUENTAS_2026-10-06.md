@@ -379,13 +379,13 @@ Para trabajar hace falta Node ≥ 22.16 (en la máquina de Saul, `nvm use 24`) y
 
 ## 13 bis. Estado de la parte EVM al 2026-10-09
 
-Lo que sigue describe la rama `feat/sca-evm-cuentas` de `tilcai-infrastructure` ([PR #24](https://github.com/TilcAI/tilcai-infrastructure/pull/24), **sin fusionar**). Parte de `main` con la capa de datos de M1 ([PR #23](https://github.com/TilcAI/tilcai-infrastructure/pull/23)) incluida. El primer consumidor es Optipagos ([optipagos-backend#1](https://github.com/Optus-development-team/optipagos-backend/pull/1)).
+Lo que sigue describe lo fusionado en `main` de `tilcai-infrastructure` el 2026-10-09 ([PR #24](https://github.com/TilcAI/tilcai-infrastructure/pull/24)), que incluye la capa de datos de M1 ([PR #23](https://github.com/TilcAI/tilcai-infrastructure/pull/23)). El primer consumidor es Optipagos ([optipagos-backend#1](https://github.com/Optus-development-team/optipagos-backend/pull/1)).
 
 | Hito | Estado | Evidencia |
 | --- | --- | --- |
 | M0 · S4 (passkey en Fuji, EIP-3009 con ERC-1271) | **Verificado en Fuji**, por el camino de EIP-3009. La UserOp de tarifa cero no se probó | `npm run sca -- verify`: una cuenta emitida por la factory pagó USDC real con firma de passkey ([tx](https://testnet.snowtrace.io/tx/0xea3cf8ac256d63812667ae7017c0f525d95e80980bb8a4ffdfbff1f86e29ad3f)) |
-| M1 · datos y cuotas | En la rama (viene de #23); la migración es la **5**, no la 3 | Sus pruebas pasan junto con las de `main` |
-| M1 · autenticación por tercero y API de cuentas | **Implementado en la rama**; pendiente de revisión de su responsable (#9) | Pruebas de permisos y de aislamiento entre terceros |
+| M1 · datos y cuotas | En `main` (viene de #23); la migración es la **5**, no la 3 | Sus pruebas pasan junto con las de `main` |
+| M1 · autenticación por tercero y API de cuentas | **Implementado en `main`**; pendiente de revisión de su responsable (#9) | Pruebas de permisos y de aislamiento entre terceros |
 | M4 · `TilcaiAccount`, factory, router v2 y modo `account` | **Implementado y desplegado en Fuji** | Factory `0x55a5b0ed47c5dfb168cfe2b431a56455576d51b8`, router v2 `0x09483803916e6cb2027741c9287361ad55507a66`; un pago en modo `account` quedó `SETTLED` en Stellar Testnet |
 | M5 · `TilcaiSessionPolicy`, UserOps, modo `account_agent` | **Pendiente** | La cuenta ya valida UserOps; no hay reglas de sesión ni envío por `handleOps` |
 | M2–M3 · Stellar | **Pendiente** | — |
