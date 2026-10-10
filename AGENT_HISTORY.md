@@ -183,3 +183,57 @@ Las cinco ramas de la fase SCA se fusionaron en `main` y se subieron: tilcai-inf
 ### Salida
 
 **En este repositorio.** Nota sobre \`vaults\` y las alertas por red en el documento de monitorización, y el estado del tablero en §13 ter del plan SCA. El detalle está en la entrada de tilcai-infrastructure de esta fecha.
+
+## 2026-10-09T21:55:57Z · SaulChoque · Claude Code (Sonnet 5.5)
+
+- **Sesión:** https://claude.ai/code/session_01XXALddBkW59xRAowuFKvD7
+- **Rama:** `main`
+- **Repositorios:** `tilcai-infrastructure`, `tilcai-web`, `documentation`
+
+### Prompt
+
+> si, mergea a main
+
+### Salida
+
+**En este repositorio.** Fusionado en `main` por PR: tilcai-infrastructure #25 (`d17fde3`), tilcai-web #29 (`981afc9`, después de traer 5 commits nuevos de `main` con 76 pruebas y `tsc` limpios) y documentation #3 (`3106636`). Los contenedores `tilcai` y `tilcai-web` siguen con las imágenes construidas desde las ramas; la de tilcai-web no incluye los 5 commits de la landing que llegaron a `main` mientras tanto.
+
+## 2026-10-10T08:05:00Z · SaulChoque · Claude Code (Opus 5.5)
+
+- **Sesión:** https://claude.ai/code/session_01RADnB7MHXhVBcEGPy1QzJ5 (hora aproximada)
+- **Rama:** `main`
+- **Repositorios:** `tilcai-infrastructure`, `tilcai-web`, `documentation`
+
+### Prompt
+
+> [la persona ejecutó en la sesión `git apply` del parche de validaciones de mainnet propuesto en la entrada anterior, sin texto adicional; continúa el prompt de 2026-10-10T07:51:00Z]
+
+### Salida
+
+Con las validaciones de mainnet aplicadas por la persona, quedó preparado el funcionamiento simultáneo de testnet y mainnet como dos instancias de la misma imagen. En el árbol de trabajo, sin commit ni push:
+
+- `tilcai-infrastructure`: `src/config/env.ts` (mainnet exige base, claves, relayers, router y RPC propios; cuentas, vaults, x402 y webhooks son opcionales; un relayer puede servir a los dos entornos), `src/mainnet/deployment.ts` y `mainnet-preflight` (comparan el código desplegado con el artefacto fuera de sus `immutable`; el router `0xf6a2EdE00c441863519C6B30A1eb2d04E61847AB` pasa), `src/apps/cli/e2e-gasless.ts` y `npm run e2e:gasless` (pago por la API con la clave de quien paga fuera del backend), `deploy/docker-compose.mainnet.yml` y `deploy/.env.mainnet.example` (instancia `tilcai-mainnet` en `127.0.0.1:18787`, relayer propio opcional), `deploy/entrypoint.sh`, `.env.example`, `README.md`, `deploy/README.md` y `deploy/MAINNET_DEPLOYMENT.md`. 187 pruebas unitarias pasan y el typecheck no reporta errores.
+- `tilcai-web`: tablero por entorno (entrada anterior) y nota de despliegue en `README.md`.
+- `documentation`: `2-ARQUITECTURA/TILCAI_MAINNET_Y_TESTNET_SIMULTANEOS_2026-10-10.md` y su entrada en el mapa de lectura.
+
+Comprobado: `e2e:gasless` liquidó un pago de 0.01 USDC de Fuji a Stellar Testnet contra una instancia temporal con el código nuevo. Las imágenes `tilcai/tilcai:local` y `tilcai/tilcai-web:local` están construidas; las anteriores quedaron como `:pre-mainnet`.
+
+Sin hacer: el clasificador de permisos rechazó levantar el contenedor de mainnet, así que no hay instancia de mainnet en marcha, ni contenedores actualizados, ni prueba e2e en mainnet con el código nuevo, ni push. Quedó un script de despliegue fuera de los repositorios para que la persona lo ejecute. Un comentario de `deploy/.env.example` («Mainnet phase 1…») quedó sin actualizar.
+
+## 2026-10-10T08:27:00Z · SaulChoque · Claude Code (Opus 5.5)
+
+- **Sesión:** https://claude.ai/code/session_01RADnB7MHXhVBcEGPy1QzJ5 (hora aproximada)
+- **Rama:** `main`
+- **Repositorios:** `tilcai-infrastructure`, `tilcai-web`, `documentation`
+
+### Prompt
+
+> [la persona ejecutó en la sesión el script de despliegue y la prueba e2e de mainnet, sin texto adicional; continúa el prompt de 2026-10-10T07:51:00Z]
+
+### Salida
+
+Desplegado y probado. La persona ejecutó el despliegue: `tilcai-mainnet` (`127.0.0.1:18787`) corre junto a `tilcai` (testnet) y `tilcai-web`, los tres con las imágenes nuevas; respaldo de las definiciones anteriores en `~/backups/docker-pre-mainnet-20261010` e imágenes previas como `:pre-mainnet`. La prueba `npm run e2e:gasless` contra la instancia de mainnet liquidó 0.01 USDC de Avalanche C-Chain a Stellar (burn `0xcfb8bb2d8aa214d09d93ce6ecdb3d2a0883c7a92f8f05ad523173431051c4413`, mint `43c32917b08c685abeca884188302531eca6a2caad63bdf9a25e81b2bd124821`); Horizon confirma el saldo del destino.
+
+En `tilcai-web` los cambios se pasaron de `feat/monitor-vault-stellar`, que estaba 18 commits detrás, a una rama sobre `origin/main` (`feat/monitor-mainnet`), con un conflicto resuelto en `src/lib/monitor/copy.ts`; 106 pruebas pasan y `tsc` no reporta errores. Incluye la limpieza de «mock/demo» que estaba sin commit de una sesión anterior. El contenedor del tablero en marcha se construyó antes de ese cambio de base.
+
+Commit y push a `main` en los tres repositorios, sin archivos `.env` con secretos. Pendiente: auditoría, relayer propio de mainnet con lista de receptores y webhooks, y los demás contratos.
