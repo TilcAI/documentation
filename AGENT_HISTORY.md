@@ -141,3 +141,49 @@ Reanuda el trabajo de los prompts de las 07:57:54Z y 08:00:23Z, que se había de
 Las cinco ramas de la fase SCA se fusionaron en `main` y se subieron: tilcai-infrastructure (PR #24), tilcai-web (#27), documentation (#2), optipagos-backend (#1) y optipagos-frontend (#4). Antes de cada push se probó el resultado de la fusión: 160 pruebas unitarias y 38 de contratos en tilcai-infrastructure; 45 pruebas, `tsc` y build en tilcai-web (su `main` había avanzado; la fusión fue limpia); 373 pruebas, lint, typecheck y build en optipagos-backend; `tsc` y lint en optipagos-frontend. No hubo nada que corregir en el código. La PR #23 de tilcai-infrastructure sigue abierta en GitHub aunque sus commits ya están en `main`.
 
 **En este repositorio.** Rama `main`. Fusión de `docs/sca-evm-estado`; después se corrigieron la sección 13 bis del plan SCA y la fila del contexto oficial, que decían «sin fusionar».
+
+## 2026-10-09T21:13:52Z · Omar · Codex (GPT-6)
+
+- **Sesión:** 01a11f48-77ad-75f2-a07a-7e01949c0d42
+- **Rama:** `main`
+- **Repositorios:** `tilcai-infrastructure`, `tilcai-web`, `documentation`, `tilcai-cctp-engine`, `tilcai-core`, `.github`
+
+### Prompt
+
+> Acabo de traer nuevos cambios de los repos:
+>
+> Revisalos:
+>
+> [adjunto: captura de los seis repositorios de TilcAI]
+> [adjunto: salida de PowerShell de las actualizaciones con git pull]
+
+### Salida
+
+Se revisó el nuevo documento de monitorización y el contexto oficial. La tabla de estado ya recoge EVM SCA, vault y QR mock; el párrafo posterior a la tabla que afirma que Docker/SCA no están fusionados quedó desactualizado frente al `main` actual. No se cambió documentación funcional; esta entrada registra la revisión.
+
+## 2026-10-09T21:30:18Z · Omar · Codex GPT-6
+
+- **Sesión:** n/d
+- **Rama:** main
+- **Repositorios:** doc, tilcai-infrastructure
+
+### Prompt
+
+> [adjuntos: seis capturas del bot de Telegram y la Mini App de TilcAI, incluidos menú de usuario, onboarding, passkey, wallet Stellar y estado]
+>
+> Que debemos hacer ahora?
+>
+> De acuerdo a los apuntes de la reunion, y los cambios actualizados: que issues debería designar ahora?
+>
+> - Ayer estabamos hablando de hacer pruebas en mainnet.
+>
+> PS [REDACTADO]> curl http://[REDACTADO]:8787/health
+> {"ok":true,"env":"testnet","relayer":"up","vault":"on","accounts":"on","qrMock":"on","monitor":"push"}
+>
+> *Lo del bot de telegram es para que yo haga puebas
+>
+> *Hicer otro proyecto con mini app y llegué hasta crear una wallet con passkeys, podemos usar esa?
+
+### Salida
+
+Se propuso usar la Mini App de Stellar como cliente de pruebas, tras verificar despliegue, control por passkey y transferencia en cadena. Se identificó que el bot actual solo consulta el estado y las rutas del backend TilcAI, por lo que falta integrarlo con QR mock, orden, aprobación y pago. Se priorizaron issues existentes de prueba testnet e integración, y una issue nueva acotada para conectar el bot. Se explicó que el backend actual rechaza mainnet y que una prueba con dinero real requiere habilitación y validación separadas. No se modificó documentación funcional ni se crearon issues.
