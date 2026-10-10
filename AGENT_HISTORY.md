@@ -237,3 +237,33 @@ Desplegado y probado. La persona ejecutó el despliegue: `tilcai-mainnet` (`127.
 En `tilcai-web` los cambios se pasaron de `feat/monitor-vault-stellar`, que estaba 18 commits detrás, a una rama sobre `origin/main` (`feat/monitor-mainnet`), con un conflicto resuelto en `src/lib/monitor/copy.ts`; 106 pruebas pasan y `tsc` no reporta errores. Incluye la limpieza de «mock/demo» que estaba sin commit de una sesión anterior. El contenedor del tablero en marcha se construyó antes de ese cambio de base.
 
 Commit y push a `main` en los tres repositorios, sin archivos `.env` con secretos. Pendiente: auditoría, relayer propio de mainnet con lista de receptores y webhooks, y los demás contratos.
+
+## 2026-10-10T08:36:00Z · SaulChoque · Claude Code (Opus 5.5)
+
+- **Sesión:** https://claude.ai/code/session_01RADnB7MHXhVBcEGPy1QzJ5 (hora aproximada)
+- **Rama:** `main`
+- **Repositorios:** `documentation`
+
+### Prompt
+
+> si, recrea el tablero y crea instrucciones para como conectar con el frontend en vercel al relayer local sin apagar optipagos
+
+### Salida
+
+Se recreó el contenedor `tilcai-web` del servidor con la imagen construida sobre `main` (responde en `:3311`; en los 90 segundos siguientes ni `tilcai` ni `tilcai-mainnet` registraron entregas rechazadas). No se abrió el tablero en un navegador.
+
+Se escribió `3-CONSTRUCCION/CONECTAR_TABLERO_VERCEL_AL_SERVIDOR_2026-10-10.md`, sin commit: el sitio no habla con el relayer (relayer → backend → sitio, de salida desde el servidor), así que no hacen falta puertos ni túnel y Optipagos no se toca; variables en Vercel, cambio de `MONITOR_WEB_URL` en los dos backends, comprobación y vuelta atrás. El procedimiento no se ejecutó. Límites señalados: en Vercel el sitio guarda los eventos en memoria por instancia y el tablero puede verse incompleto hasta tener un almacén duradero; cada backend entrega a un solo destino, así que apuntar a Vercel deja sin eventos nuevos al tablero local; y recrear `tilcai` corta la API de testnet unos segundos.
+
+## 2026-10-10T08:40:00Z · SaulChoque · Claude Code (Opus 5.5)
+
+- **Sesión:** https://claude.ai/code/session_01RADnB7MHXhVBcEGPy1QzJ5 (hora aproximada)
+- **Rama:** `main`
+- **Repositorios:** `documentation`
+
+### Prompt
+
+> haz commit
+
+### Salida
+
+Commit en `main` de `3-CONSTRUCCION/CONECTAR_TABLERO_VERCEL_AL_SERVIDOR_2026-10-10.md` y de las entradas del historial. Sin push: no se pidió.
