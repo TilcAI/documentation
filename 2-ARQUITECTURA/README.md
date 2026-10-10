@@ -10,6 +10,8 @@
 
 6. **[Monitorización: del backend al tablero](TILCAI_MONITORIZACION_EVENTOS_BACKEND_FRONTEND_2026-10-09.md)** explica **cómo se ve lo que pasa**: el registro de eventos del backend (pagos, vault, avisos del relayer, mock de QR Simple, recursos y alertas), el contrato `tilcai-monitor-v1`, el envío firmado a `tilcai-web`, el almacén y la interpretación en el sitio, y lo pendiente para el tablero. Describe código que ya está en `main` de los dos repositorios.
 
+7. **[Mainnet y testnet a la vez](TILCAI_MAINNET_Y_TESTNET_SIMULTANEOS_2026-10-10.md)** explica **cómo conviven los dos entornos**: dos instancias de la misma imagen, qué existe hoy en mainnet (el router y un pago real), qué cambió en el backend y en el tablero, y los riesgos aceptados y pendientes.
+
 Los estados de implementación se contrastan con el [contexto oficial](../0-OFICIAL/CONTEXTO_OFICIAL_TILCAI.md), el [plan backend](../TILCAI_PLAN_ARQUITECTURA_BACKEND_INFRA_2026-10-02.md), el [plan SCA](../TILCAI_FASE_SCA_EMISION_DE_CUENTAS_2026-10-06.md) y los repositorios. **Preparación técnica** significa código base o interfaces con pruebas locales; no significa que la API ya emita cuentas ni que exista una compra comercial completa. La ruta CCTP Fuji → Stellar tiene evidencia testnet reportada por el backend y debe ser reproducida por otro integrante; las otras rutas del laboratorio no se presentan como integraciones operativas.
 
 Las copias de `FASE-1/PRIMERA-PRESENTACION` sirven al material de la primera presentación. Mantienen el mismo contenido conceptual y enlaces ajustados a su ubicación. Al cambiar decisiones o estados, revisar ambas ubicaciones.
