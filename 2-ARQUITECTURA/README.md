@@ -15,3 +15,8 @@
 Los estados de implementación se contrastan con el [contexto oficial](../0-OFICIAL/CONTEXTO_OFICIAL_TILCAI.md), el [plan backend](../TILCAI_PLAN_ARQUITECTURA_BACKEND_INFRA_2026-10-02.md), el [plan SCA](../TILCAI_FASE_SCA_EMISION_DE_CUENTAS_2026-10-06.md) y los repositorios. **Preparación técnica** significa código base o interfaces con pruebas locales; no significa que la API ya emita cuentas ni que exista una compra comercial completa. La ruta CCTP Fuji → Stellar tiene evidencia testnet reportada por el backend y debe ser reproducida por otro integrante; las otras rutas del laboratorio no se presentan como integraciones operativas.
 
 Las copias de `FASE-1/PRIMERA-PRESENTACION` sirven al material de la primera presentación. Mantienen el mismo contenido conceptual y enlaces ajustados a su ubicación. Al cambiar decisiones o estados, revisar ambas ubicaciones.
+
+## Integraciones y fiscalidad · 2026-11-01
+
+- [Facturación en línea SIN Bolivia](TILCAI_FACTURACION_SIN_2026-11-01.md): fases de empresa única y terceros, normativa oficial y pendientes de verificación 2026.
+- [Autenticación de terceros](../3-CONSTRUCCION/DECISION_AUTENTICACION_TERCEROS_2026-11-01.md) y [contrato implementado](../3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md).

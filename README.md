@@ -22,3 +22,13 @@
 Se conservan en la raíz, para no romper enlaces, cuatro **fuentes fechadas**: [visión de comercio agéntico, 29/09](TILCAI_NUEVO_RUMBO_COMERCIO_AGENTICO_2026-09-29.md), [plan backend, 02/10](TILCAI_PLAN_ARQUITECTURA_BACKEND_INFRA_2026-10-02.md), [fase SCA, 06/10](TILCAI_FASE_SCA_EMISION_DE_CUENTAS_2026-10-06.md) y [plan web original, 29/09](TILCAI_WEB_FASE_1_DISENO_MARCA_IMPLEMENTACION_2026-09-29.md). Aportan detalle, pero su fecha no acredita que todo esté implementado.
 
 **Regla de actualización:** el código y sus pruebas determinan lo implementado; una prueba testnet acredita la ruta reproducida, no todas las rutas previstas. `0-OFICIAL` resume el estado y las decisiones de producto; `2-ARQUITECTURA` desarrolla el diseño; `3-CONSTRUCCION` enumera lo pendiente. Al integrar algo, añadir commit/PR, fecha y evidencia E2E a la matriz oficial. Separar **implementado**, **verificado**, **reportado por el equipo**, **propuesto** y **pendiente**. Una simulación web o matriz de redes no es una compra comercial operativa.
+
+## Planificación del 1 de noviembre de 2026
+
+- [Facturación SIN: empresa única y terceros](2-ARQUITECTURA/TILCAI_FACTURACION_SIN_2026-11-01.md). Propuesta con requisitos fiscales, arquitectura, fases y validaciones pendientes de normativa 2026.
+- [Plan de issues de SaulChoque](3-CONSTRUCCION/PLAN_ISSUES_SAULCHOQUE_2026-11-01.md). Análisis del backend y criterios de implementación.
+
+- [Decisión API keys/OAuth](3-CONSTRUCCION/DECISION_AUTENTICACION_TERCEROS_2026-11-01.md). API keys para integraciones de backend; OAuth para futura delegación de usuario/MCP remoto.
+- [Implementación de credenciales](3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md): CLI, caducidad, rotación, SDK 0.3.0 y MCP.
+- [Resultados de Vault/Soroban](3-CONSTRUCCION/RESULTADOS_VAULT_SOROBAN_2026-11-01.md) e [investigación TTL](3-CONSTRUCCION/INVESTIGACION_TTL_SOROBAN_2026-11-01.md).
+- [Estado de repositorios y entrega](3-CONSTRUCCION/ESTADO_REPOSITORIOS_2026-11-01.md).

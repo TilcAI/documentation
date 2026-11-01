@@ -312,3 +312,99 @@ Se escribió `3-CONSTRUCCION/CONECTAR_TABLERO_VERCEL_AL_SERVIDOR_2026-10-10.md`,
 ### Salida
 
 Commit en `main` de `3-CONSTRUCCION/CONECTAR_TABLERO_VERCEL_AL_SERVIDOR_2026-10-10.md` y de las entradas del historial. Sin push: no se pidió.
+
+## 2026-11-01T06:46:23Z · saulchoque · Codex / gpt-6.1-sol
+
+- **Sesión:** n/d
+- **Rama:** main
+- **Repositorios:** TilcAI/documentation, tilcai-infrastructure, tilcai-sdk, tilcai-mcp, tilcai-core, tilcai-web, tilcai-cctp-engine, .github
+
+### Prompt
+
+> actualiza todos los repositorios del proyecto, analiza el proyecto tilcai-infraestructure y planea la resolucion y modificaciones para resolver las issues asignadas, asi tambien investiga y crea documentacion para implementar facturacion enlinea para terceros y una fase intermedia facturando todo con una sola empresa usando el servicio de impuestos nacionales de bolivia
+
+### Salida
+
+Actualicé los **8 repositorios**, preservando tus cambios locales.
+
+- **Correcciones:** rama `fix/saulchoque-vault-soroban-2026-11-01`, con cambios para #28, #35 y #42.
+- **Credenciales:** rama `feat/third-party-credentials`, basada en las correcciones. API keys por tenant y entorno, caducidad, rotación, revocación e introspección.
+- **SDK y MCP:** ramas `feat/third-party-credentials`, con soporte para rotación e inspección de permisos.
+
+**Tests:** backend 206, SDK 85, MCP 7, Soroban 12 y despliegue 5: todos pasan. También pasaron typecheck, builds y comprobaciones entre backend, SDK y MCP.
+
+Documentación: [resultados y ramas](/home/saul-bms/proyectos/tilcai/documentation/3-CONSTRUCCION/ESTADO_REPOSITORIOS_2026-11-01.md), [credenciales](/home/saul-bms/proyectos/tilcai/documentation/3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md) y [facturación SIN: empresa única y terceros](/home/saul-bms/proyectos/tilcai/documentation/2-ARQUITECTURA/TILCAI_FACTURACION_SIN_2026-11-01.md).
+
+**Pendiente:** completar archivo/restauración real para #32 y verificar íntegramente la normativa/anexo SIN 2026. La facturación está documentada, todavía no implementada. Los cambios quedan locales, sin despliegue ni publicación.
+
+## 2026-11-01T06:46:23Z · saulchoque · Codex / gpt-6.1-sol
+
+- **Sesión:** n/d
+- **Rama:** main
+- **Repositorios:** TilcAI/documentation, tilcai-infrastructure, tilcai-sdk, tilcai-mcp, tilcai-core, tilcai-web, tilcai-cctp-engine, .github
+
+### Prompt
+
+> posteriormente, luego de realizar la planeacion, realiza la implementacion y modificaciones necesarias  en una rama separada para tilcai infraestructure, realiza tests
+
+### Salida
+
+Actualicé los **8 repositorios**, preservando tus cambios locales.
+
+- **Correcciones:** rama `fix/saulchoque-vault-soroban-2026-11-01`, con cambios para #28, #35 y #42.
+- **Credenciales:** rama `feat/third-party-credentials`, basada en las correcciones. API keys por tenant y entorno, caducidad, rotación, revocación e introspección.
+- **SDK y MCP:** ramas `feat/third-party-credentials`, con soporte para rotación e inspección de permisos.
+
+**Tests:** backend 206, SDK 85, MCP 7, Soroban 12 y despliegue 5: todos pasan. También pasaron typecheck, builds y comprobaciones entre backend, SDK y MCP.
+
+Documentación: [resultados y ramas](/home/saul-bms/proyectos/tilcai/documentation/3-CONSTRUCCION/ESTADO_REPOSITORIOS_2026-11-01.md), [credenciales](/home/saul-bms/proyectos/tilcai/documentation/3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md) y [facturación SIN: empresa única y terceros](/home/saul-bms/proyectos/tilcai/documentation/2-ARQUITECTURA/TILCAI_FACTURACION_SIN_2026-11-01.md).
+
+**Pendiente:** completar archivo/restauración real para #32 y verificar íntegramente la normativa/anexo SIN 2026. La facturación está documentada, todavía no implementada. Los cambios quedan locales, sin despliegue ni publicación.
+
+## 2026-11-01T06:46:23Z · saulchoque · Codex / gpt-6.1-sol
+
+- **Sesión:** n/d
+- **Rama:** main
+- **Repositorios:** TilcAI/documentation, tilcai-infrastructure, tilcai-sdk, tilcai-mcp, tilcai-core, tilcai-web, tilcai-cctp-engine, .github
+
+### Prompt
+
+> continua
+
+### Salida
+
+Actualicé los **8 repositorios**, preservando tus cambios locales.
+
+- **Correcciones:** rama `fix/saulchoque-vault-soroban-2026-11-01`, con cambios para #28, #35 y #42.
+- **Credenciales:** rama `feat/third-party-credentials`, basada en las correcciones. API keys por tenant y entorno, caducidad, rotación, revocación e introspección.
+- **SDK y MCP:** ramas `feat/third-party-credentials`, con soporte para rotación e inspección de permisos.
+
+**Tests:** backend 206, SDK 85, MCP 7, Soroban 12 y despliegue 5: todos pasan. También pasaron typecheck, builds y comprobaciones entre backend, SDK y MCP.
+
+Documentación: [resultados y ramas](/home/saul-bms/proyectos/tilcai/documentation/3-CONSTRUCCION/ESTADO_REPOSITORIOS_2026-11-01.md), [credenciales](/home/saul-bms/proyectos/tilcai/documentation/3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md) y [facturación SIN: empresa única y terceros](/home/saul-bms/proyectos/tilcai/documentation/2-ARQUITECTURA/TILCAI_FACTURACION_SIN_2026-11-01.md).
+
+**Pendiente:** completar archivo/restauración real para #32 y verificar íntegramente la normativa/anexo SIN 2026. La facturación está documentada, todavía no implementada. Los cambios quedan locales, sin despliegue ni publicación.
+
+## 2026-11-01T06:46:23Z · saulchoque · Codex / gpt-6.1-sol
+
+- **Sesión:** n/d
+- **Rama:** main
+- **Repositorios:** TilcAI/documentation, tilcai-infrastructure, tilcai-sdk, tilcai-mcp, tilcai-core, tilcai-web, tilcai-cctp-engine, .github
+
+### Prompt
+
+> posteriormente, analiza y planea la implementacion de un sistema de emision de api keys para tercerros (optipagos, fexpo, etc) es mejor usar api keys? oauth?, etc, elige la mejor opcion para tilcai, lugo realiza las modificaciones en otra rama (esta debe estar al dia con los cambios realizados en la rama en la que se esta trabajando ahora), asi tambien modifica el sdk de tilcai y su mcp, y finalmente actualiza toda la documentacion con estos nuevos cambios
+
+### Salida
+
+Actualicé los **8 repositorios**, preservando tus cambios locales.
+
+- **Correcciones:** rama `fix/saulchoque-vault-soroban-2026-11-01`, con cambios para #28, #35 y #42.
+- **Credenciales:** rama `feat/third-party-credentials`, basada en las correcciones. API keys por tenant y entorno, caducidad, rotación, revocación e introspección.
+- **SDK y MCP:** ramas `feat/third-party-credentials`, con soporte para rotación e inspección de permisos.
+
+**Tests:** backend 206, SDK 85, MCP 7, Soroban 12 y despliegue 5: todos pasan. También pasaron typecheck, builds y comprobaciones entre backend, SDK y MCP.
+
+Documentación: [resultados y ramas](/home/saul-bms/proyectos/tilcai/documentation/3-CONSTRUCCION/ESTADO_REPOSITORIOS_2026-11-01.md), [credenciales](/home/saul-bms/proyectos/tilcai/documentation/3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md) y [facturación SIN: empresa única y terceros](/home/saul-bms/proyectos/tilcai/documentation/2-ARQUITECTURA/TILCAI_FACTURACION_SIN_2026-11-01.md).
+
+**Pendiente:** completar archivo/restauración real para #32 y verificar íntegramente la normativa/anexo SIN 2026. La facturación está documentada, todavía no implementada. Los cambios quedan locales, sin despliegue ni publicación.
