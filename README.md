@@ -45,3 +45,5 @@ Este repositorio reúne la evidencia de la entrega: [ramas y commits](3-CONSTRUC
 [QR desde payload](3-CONSTRUCCION/QR_PAYLOAD_Y_CONFIGURACION_2026-11-02.md).
 Las ramas están publicadas; las issues #28/#35/#42 requieren revisión y #32 mantiene investigación pendiente.
 La facturación SIN sigue en diseño. Cada documento distingue pruebas locales, propuestas y despliegues.
+
+- [Centralización de Core 0.1.0](3-CONSTRUCCION/CENTRALIZACION_CORE_2026-11-02.md): contratos compartidos, consumidores, compatibilidad y distribución pendiente.

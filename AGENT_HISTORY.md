@@ -457,3 +457,45 @@ Verifiqué los ocho repositorios y los worktrees: no había cambios pendientes y
 ### Salida
 
 Actualicé el README de este repositorio con su alcance en la entrega, ramas publicadas, enlaces a la documentación y pendientes. Los cambios se publicaron en la rama indicada. Se revisaron el formato del diff y los enlaces locales de los README; no se modificó código ni se ejecutaron pruebas funcionales.
+
+## 2026-11-02T23:07:56Z · saulchoque · Codex / gpt-6.1-sol
+
+- **Sesión:** n/d
+- **Rama:** main
+- **Repositorios:** documentation
+
+### Prompt
+
+> analiza que otros repositorios de tilcai necesitan de core como dependencia, asi tambien revisa especificacmente que utilizan de core y que otras cosas podrian moverse a core
+
+### Salida
+
+Análisis estático guardado en 3-CONSTRUCCION/ANALISIS_DEPENDENCIAS_CORE_2026-11-02.md. Infrastructure importa tipos y funciones de Core; SDK copia y expone tres módulos; MCP, Web y CCTP no tienen esa dependencia declarada. Se proponen contratos API/monitor, importes y redes como extracciones graduales, previa resolución de diferencias. Se detectaron divergencias de redes, importes y catálogo de eventos. No se modificó código funcional, accesos ni despliegues y no se publicaron cambios.
+
+## 2026-11-02T23:38:04Z · saulchoque · Codex / gpt-6.1-sol
+
+- **Sesión:** n/d
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure, tilcai-sdk, tilcai-mcp, tilcai-web, documentation
+
+### Prompt
+
+> Genial, entonces centralizemos los mejores canditados y formalizemos core para usarse como dependencia en los otros repositorios. Realiza las modificaciones correspondientes en core y los repositorios afectados
+
+### Salida
+
+Core 0.1.0 compila contratos compartidos con entradas ESM/CJS y tipos; los consumidores sustituyen espejos por dependencias externas. Se centralizaron monitor, tipos API/redes y aritmética exacta, preservando adaptadores y políticas experimentales. Se actualizaron README y docs/CORE_INTEGRATION.md (o el documento de centralización en documentation). Validación local: Core 33, backend 212, SDK 86, MCP 7 y web 108 tests; typecheck/builds y smoke de paquetes/Docker. Sin publicación de paquetes ni despliegues.
+
+## 2026-11-02T23:38:04Z · saulchoque · Codex / gpt-6.1-sol
+
+- **Sesión:** n/d
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure, tilcai-sdk, tilcai-mcp, tilcai-web, documentation
+
+### Prompt
+
+> no te olvides de actualizar la documentacion de los proyectos afectados
+
+### Salida
+
+Core 0.1.0 compila contratos compartidos con entradas ESM/CJS y tipos; los consumidores sustituyen espejos por dependencias externas. Se centralizaron monitor, tipos API/redes y aritmética exacta, preservando adaptadores y políticas experimentales. Se actualizaron README y docs/CORE_INTEGRATION.md (o el documento de centralización en documentation). Validación local: Core 33, backend 212, SDK 86, MCP 7 y web 108 tests; typecheck/builds y smoke de paquetes/Docker. Sin publicación de paquetes ni despliegues.
