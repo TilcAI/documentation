@@ -36,3 +36,12 @@ Se conservan en la raíz, para no romper enlaces, cuatro **fuentes fechadas**: [
 - [QR desde payload y configuración bancaria](3-CONSTRUCCION/QR_PAYLOAD_Y_CONFIGURACION_2026-11-02.md): comportamiento, pruebas y valores publicados.
 
 Las ramas de esta entrega están publicadas. El estado de repositorios distingue publicación, integración y despliegue; SIN y TTL conservan pendientes.
+
+## Estado de publicación · 2026-11-02 UTC
+
+Este repositorio reúne la evidencia de la entrega: [ramas y commits](3-CONSTRUCCION/ESTADO_REPOSITORIOS_2026-11-01.md),
+[correcciones Vault/Soroban](3-CONSTRUCCION/RESULTADOS_VAULT_SOROBAN_2026-11-01.md),
+[credenciales de terceros](3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md) y
+[QR desde payload](3-CONSTRUCCION/QR_PAYLOAD_Y_CONFIGURACION_2026-11-02.md).
+Las ramas están publicadas; las issues #28/#35/#42 requieren revisión y #32 mantiene investigación pendiente.
+La facturación SIN sigue en diseño. Cada documento distingue pruebas locales, propuestas y despliegues.
