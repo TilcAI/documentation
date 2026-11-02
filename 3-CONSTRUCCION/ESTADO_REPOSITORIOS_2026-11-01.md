@@ -1,40 +1,62 @@
 # Estado de repositorios y entrega
 
-2026-11-01. Se hizo fetch/prune de los cinco checkouts iniciales e integración de main sin
-sobrescribir trabajo local. La búsqueda de repositorios de TilcAI encontró ocho: se clonaron
-además tilcai-mcp, tilcai-cctp-engine y .github desde su main remoto.
+Actualizado: 2026-11-02 UTC. Reemplaza el estado previo a publicación del 1 de noviembre.
+Las ramas locales se publicaron mediante push. Publicación no acredita merge, despliegue
+ni validación contra redes reales. Los historiales conservan sus salidas originales.
 
-| Repositorio | Rama consultada | HEAD de referencia antes de commits de esta entrega |
+## Ramas publicadas
+
+| Repositorio | Rama | Commit de referencia | Alcance |
+| --- | --- | --- | --- |
+| documentation | main | d4abb52, antes de esta actualización | Planes, resultados, credenciales y SIN |
+| tilcai-core | main | 9f980e9 | Documentación e historial |
+| tilcai-infrastructure | fix/saulchoque-vault-soroban-2026-11-01 | f2cf032 | Implementación 73805cc de #28/#35/#42 y resultados |
+| tilcai-infrastructure | feat/third-party-credentials | b47165e | Credenciales 60e3199 e integración de fixes |
+| tilcai-infrastructure | feat/qr-providers-fallback | e064378 | Gateway, payload QR y configuración |
+| tilcai-sdk | feat/third-party-credentials | f27f333 | Introspección y proveedor dinámico de API key |
+| tilcai-mcp | feat/third-party-credentials | 2417706 | Introspección y recarga de archivo de credencial |
+| tilcai-web | feat/qr-gateway-events | 6b3179f | QR/eventos |
+| tilcai-web | main | 5c5701e | Main local actualizado mediante fast-forward |
+| tilcai-cctp-engine | main | 4b87515 | Historial y documentación |
+| .github | main | b57044f | Historial |
+
+Los SHA son referencias de esta entrega; el remoto puede avanzar. También se publicaron
+las otras ramas locales existentes. Infrastructure usa worktrees separados: correcciones,
+credenciales y QR. Credenciales incorpora los fixes Vault/Soroban; no incorpora automáticamente QR.
+
+## Correspondencia con solicitudes e issues
+
+Consulta GitHub del 2026-11-02 UTC: las cuatro issues de saulchoque siguen abiertas.
+
+| Solicitud | Resultado | Pendiente |
 | --- | --- | --- |
-| documentation | `main` | `220d7ea` |
-| tilcai-core | `main` | `f642c25` |
-| tilcai-infrastructure | `feat/qr-providers-fallback` | `39cc88e` |
-| tilcai-sdk | `feat/third-party-credentials` | `c7fce62` |
-| tilcai-web | `feat/qr-gateway-events` | `d0a06bd` |
-| tilcai-mcp | `feat/third-party-credentials` | `8d5e500` |
-| tilcai-cctp-engine | `main` | `4ebfa04` |
-| .github | `main` | `068b647` |
+| Actualizar repositorios, analizar y planear | Ocho repositorios sincronizados/publicados; plan por issue | Revisar e integrar ramas |
+| #28: evidencia de payout | Conserva estado incierto y reserva sin evidencia concordante | Revisión de aceptación antes de cierre |
+| #35: capacidad concurrente | Admisión dentro de transacción SQLite; prueba con dos conexiones | Revisar política de snapshot y UTC |
+| #42: despliegue Soroban | Parser seguro/exacto, validaciones y manifiesto durable | Revisión de recuperación y aceptación |
+| #32: replay tras TTL | Experimentos SDK y protocolo documentados | Archivo/restauración real y decisión D-05 |
+| Autenticación para terceros | API keys por tenant/entorno/scopes, caducidad, rotación y revocación; SDK/MCP | Rollout y onboarding real; OAuth remoto es fase separada |
+| Facturación SIN | Diseño de empresa única y terceros | Normativa/anexos vigentes, titular fiscal, habilitación e implementación |
+| QR desde payload en desarrollo/producción | dfb7006: misma función generadora para ambos entornos | No acredita cobro bancario real |
+| Publicar todos los cambios | Push completado, incluidos configuración e historiales | No equivale a merge o despliegue |
 
-Web integró origin/main con merge local d0a06bd; las otras ramas iniciales ya contenían main.
-El main local de Web puede seguir detrás: se actualizó la rama de trabajo, sin cambiar ramas
-que el usuario no tenía activas. Las ramas remotas y main no reciben push de esta tarea.
+Issues: [#28](https://github.com/TilcAI/tilcai-infrastructure/issues/28),
+[#35](https://github.com/TilcAI/tilcai-infrastructure/issues/35),
+[#42](https://github.com/TilcAI/tilcai-infrastructure/issues/42) y
+[#32](https://github.com/TilcAI/tilcai-infrastructure/issues/32).
 
-Infrastructure conserva en su checkout original los cambios QR/config/deploy y dos commits
-locales no publicados. Se creó worktree tilcai-infrastructure-issues desde origin/main:
+## Validación y límites
 
-- fix/saulchoque-vault-soroban-2026-11-01: commit de implementación 73805cc.
-- feat/third-party-credentials: parte de 73805cc e incorpora las credenciales; es la rama activa
-  del worktree aislado. El checkout original sigue en feat/qr-providers-fallback.
-- SDK y MCP: ramas locales feat/third-party-credentials en sus respectivos repositorios.
+Evidencia previa: backend de credenciales 206 tests, SDK 85, MCP 7, despliegue Python 5 y
+Vault Rust 12. Typecheck backend/SDK/MCP, builds SDK/MCP y smoke ESM/CJS del SDK pasaron.
+La corrección QR posterior pasó las 15 pruebas de QR Simple. No se volvieron a ejecutar
+estas suites al publicar configuración/historiales ni al editar esta documentación.
 
-Los IDs de migración se coordinan: 6 pertenece al QR de la rama original; autenticación usa 7.
-Comprobar orden e IDs al integrar ambas ramas, sin cambiar migraciones ya aplicadas.
+Migración 6 corresponde a QR y 7 a autenticación. Comprobar orden al integrar ramas, sin
+cambiar migraciones aplicadas. Desplegar backend compatible antes de SDK/MCP con introspección.
+No se emitieron claves reales de socios ni se ejecutaron pagos o despliegues en esta entrega.
+La facturación sigue siendo propuesta; la investigación TTL sigue parcial.
 
-Validación: backend de credenciales 206 tests unitarios, SDK 85, MCP 7, despliegue Python 5 y
-Vault Rust 12. Typecheck backend/SDK/MCP, build SDK/MCP y smoke ESM/CJS del SDK pasaron.
-#32 queda pendiente de archivo/restauración real y decisión D-05. Las pruebas SDK de Soroban
-no acreditan esa integración completa. La facturación es documentación/propuesta; faltan
-normativa/anexo 2026 verificables y definición del titular fiscal antes de integración SIN.
-
-No se crearon claves reales de socios, no se desplegó ni ejecutaron pagos. Los tests usaron
-DBs, claves y proveedores sintéticos. La evidencia disponible está en los documentos del índice.
+Ver [resultados Vault/Soroban](RESULTADOS_VAULT_SOROBAN_2026-11-01.md),
+[credenciales](CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md) y
+[QR y configuración](QR_PAYLOAD_Y_CONFIGURACION_2026-11-02.md).

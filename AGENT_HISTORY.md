@@ -408,3 +408,24 @@ Actualicé los **8 repositorios**, preservando tus cambios locales.
 Documentación: [resultados y ramas](/home/saul-bms/proyectos/tilcai/documentation/3-CONSTRUCCION/ESTADO_REPOSITORIOS_2026-11-01.md), [credenciales](/home/saul-bms/proyectos/tilcai/documentation/3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md) y [facturación SIN: empresa única y terceros](/home/saul-bms/proyectos/tilcai/documentation/2-ARQUITECTURA/TILCAI_FACTURACION_SIN_2026-11-01.md).
 
 **Pendiente:** completar archivo/restauración real para #32 y verificar íntegramente la normativa/anexo SIN 2026. La facturación está documentada, todavía no implementada. Los cambios quedan locales, sin despliegue ni publicación.
+
+## 2026-11-02T01:10:32Z · saulchoque · Codex / gpt-6.1-sol
+
+- **Sesión:** n/d
+- **Rama:** main
+- **Repositorios:** documentation
+
+### Prompt
+
+> Revisa y actualiza la documentacion con los cambios realizados al momento en el repositorio de documentacion
+
+### Salida
+
+Actualicé y publiqué la documentación en `documentation/main`:
+
+- Estado de ramas y commits publicados, con correspondencia entre solicitudes e issues.
+- SDK/MCP y credenciales para terceros.
+- Generación QR desde payload y configuración bancaria/Tailscale.
+- Índices y contexto oficial, conservando las referencias históricas.
+
+Las cuatro issues siguen abiertas; #32 y la facturación SIN conservan pendientes. Validé los enlaces locales de los documentos editados y el formato del diff.

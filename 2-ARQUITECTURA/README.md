@@ -20,3 +20,5 @@ Las copias de `FASE-1/PRIMERA-PRESENTACION` sirven al material de la primera pre
 
 - [Facturación en línea SIN Bolivia](TILCAI_FACTURACION_SIN_2026-11-01.md): fases de empresa única y terceros, normativa oficial y pendientes de verificación 2026.
 - [Autenticación de terceros](../3-CONSTRUCCION/DECISION_AUTENTICACION_TERCEROS_2026-11-01.md) y [contrato implementado](../3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md).
+
+- [Estado de entrega actualizado](../3-CONSTRUCCION/ESTADO_REPOSITORIOS_2026-11-01.md) y [QR desde payload](../3-CONSTRUCCION/QR_PAYLOAD_Y_CONFIGURACION_2026-11-02.md): ramas publicadas, pruebas y límites al 2 de noviembre UTC.

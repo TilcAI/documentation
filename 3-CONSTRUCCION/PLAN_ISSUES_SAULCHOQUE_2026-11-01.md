@@ -1,5 +1,9 @@
 # Plan de resolución de issues de SaulChoque
 
+Actualización 2026-11-02 UTC: ramas publicadas y cuatro issues aún abiertas. Ver
+[estado de entrega](ESTADO_REPOSITORIOS_2026-11-01.md). Las referencias a cambios locales
+más abajo describen el análisis inicial.
+
 Fecha: 2026-11-01. Estado: análisis estático y planificación; ninguna issue implementada o cerrada por este documento. Fuente: consulta GitHub `org:tilcai is:issue is:open assignee:saulchoque`, 4 resultados completos.
 
 > Actualización posterior: #28/#35/#42 tienen implementación en la rama fix/saulchoque-vault-soroban-2026-11-01; ver resultados de Vault/Soroban. #32 tiene dos experimentos SDK ejecutados y protocolo pendiente de archivo/restauración real. Las secciones del plan conservan su estado de elaboración para distinguir propuestas de evidencia posterior.

@@ -2,6 +2,16 @@
 
 **Corte:** 8 de octubre de 2026 · **Objetivo inmediato:** demo reproducible el sábado 10 de octubre, en testnet. Este documento es la referencia de coordinación; el código y una prueba reproducible determinan qué capacidad está terminada.
 
+## Actualización técnica · 2026-11-02 UTC
+
+El corte de octubre conserva el contexto de aquella demo. Para la entrega actual, consultar
+[ramas, commits y pendientes](../3-CONSTRUCCION/ESTADO_REPOSITORIOS_2026-11-01.md).
+SDK y MCP tienen implementación publicada con introspección y rotación de credenciales;
+las referencias históricas a SDK futuro/MCP pendiente no describen esta entrega.
+Las correcciones #28/#35/#42 están publicadas con tests locales e issues aún abiertas.
+QR Simple genera desde payload. La facturación SIN sigue propuesta y #32 sigue parcial.
+Estas publicaciones no acreditan despliegue o una compra comercial completa.
+
 ## Qué construimos
 
 **TilcAI es infraestructura de comercio entre agentes de compradores y negocios.** Recibe una intención de compra o reserva, obtiene del negocio una oferta con precio, disponibilidad y destino de cobro verificables, aplica identidad, límites y aprobación, coordina un pago por un riel soportado y vincula el resultado financiero con la orden y la confirmación comercial. El comprador entra por WhatsApp, por un asistente conectado mediante **MCP** (Model Context Protocol) o por una aplicación que use la API. Un SDK es una capa futura sobre esa API. El negocio responde con su agente, un adaptador a POS/agenda o una consola operada por una persona. Ningún modelo de IA obtiene por sí mismo autoridad para mover fondos o inventar precios.

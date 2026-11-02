@@ -1,6 +1,6 @@
 # Documentación de TilcAI
 
-**Actualizada:** 9 de octubre de 2026. **Próxima presentación:** sábado 10 de octubre. Este índice es la entrada para el equipo.
+**Actualizada:** 2 de noviembre de 2026 (UTC). Este índice es la entrada para el equipo.
 
 ## Leer en este orden
 
@@ -23,7 +23,7 @@ Se conservan en la raíz, para no romper enlaces, cuatro **fuentes fechadas**: [
 
 **Regla de actualización:** el código y sus pruebas determinan lo implementado; una prueba testnet acredita la ruta reproducida, no todas las rutas previstas. `0-OFICIAL` resume el estado y las decisiones de producto; `2-ARQUITECTURA` desarrolla el diseño; `3-CONSTRUCCION` enumera lo pendiente. Al integrar algo, añadir commit/PR, fecha y evidencia E2E a la matriz oficial. Separar **implementado**, **verificado**, **reportado por el equipo**, **propuesto** y **pendiente**. Una simulación web o matriz de redes no es una compra comercial operativa.
 
-## Planificación del 1 de noviembre de 2026
+## Implementación y pendientes · noviembre de 2026
 
 - [Facturación SIN: empresa única y terceros](2-ARQUITECTURA/TILCAI_FACTURACION_SIN_2026-11-01.md). Propuesta con requisitos fiscales, arquitectura, fases y validaciones pendientes de normativa 2026.
 - [Plan de issues de SaulChoque](3-CONSTRUCCION/PLAN_ISSUES_SAULCHOQUE_2026-11-01.md). Análisis del backend y criterios de implementación.
@@ -32,3 +32,7 @@ Se conservan en la raíz, para no romper enlaces, cuatro **fuentes fechadas**: [
 - [Implementación de credenciales](3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md): CLI, caducidad, rotación, SDK 0.3.0 y MCP.
 - [Resultados de Vault/Soroban](3-CONSTRUCCION/RESULTADOS_VAULT_SOROBAN_2026-11-01.md) e [investigación TTL](3-CONSTRUCCION/INVESTIGACION_TTL_SOROBAN_2026-11-01.md).
 - [Estado de repositorios y entrega](3-CONSTRUCCION/ESTADO_REPOSITORIOS_2026-11-01.md).
+
+- [QR desde payload y configuración bancaria](3-CONSTRUCCION/QR_PAYLOAD_Y_CONFIGURACION_2026-11-02.md): comportamiento, pruebas y valores publicados.
+
+Las ramas de esta entrega están publicadas. El estado de repositorios distingue publicación, integración y despliegue; SIN y TTL conservan pendientes.

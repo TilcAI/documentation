@@ -1,7 +1,8 @@
 # Implementación y validación: #28, #35 y #42
 
 Base: origin/main 58066a7. Rama: fix/saulchoque-vault-soroban-2026-11-01.
-Worktree aislado: ../tilcai-infrastructure-issues. Se preservó el trabajo QR sin publicarlo.
+Worktree actual: ../tilcai-infrastructure-fixes. Rama publicada en f2cf032 e incorporada
+en credenciales (b47165e). QR se publicó por separado; ver el estado de repositorios.
 
 ## Cambios
 

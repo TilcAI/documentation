@@ -37,3 +37,10 @@ Auditoría de ciclo de vida y lastUsedAt no reemplazan rate limiting de gateway.
 existentes controlan patrocinio; los límites de tráfico deben configurarse en el ingreso.
 
 La rama feat/third-party-credentials parte de 73805cc y contiene todos los fixes previos.
+
+## Publicación · 2026-11-02 UTC
+
+Ramas feat/third-party-credentials publicadas: infrastructure b47165e (implementación
+60e3199, incluye fixes Vault/Soroban), SDK f27f333 y MCP 2417706. La publicación no
+acredita despliegue ni emisión de credenciales reales. Ver el
+[estado de repositorios](ESTADO_REPOSITORIOS_2026-11-01.md).

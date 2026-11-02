@@ -78,3 +78,10 @@ covers issue/revoke/rotate operations from the operator CLI; env-key synchroniza
 its existing configuration-driven lifecycle.
 
 Comprobación adicional: backend local real + SDK + cliente MCP pasaron introspección, rotación mediante proveedor dinámico y rechazo 401 de la clave anterior. El ejecutable MCP compilado pasó initialize/tools/list/tools/call mediante stdio sin acceder a una red pública.
+
+## Publicación · 2026-11-02 UTC
+
+Ramas feat/third-party-credentials publicadas: infrastructure b47165e (implementación
+60e3199, incluye fixes Vault/Soroban), SDK f27f333 y MCP 2417706. La publicación no
+acredita despliegue ni emisión de credenciales reales. Ver el
+[estado de repositorios](ESTADO_REPOSITORIOS_2026-11-01.md).
