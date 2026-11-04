@@ -527,3 +527,31 @@ Migrados infraestructura, SDK, MCP y web al alias npm:@tilcai/core@0.1.0 con loc
 ### Salida
 
 Preparación e integración mediante PR de contratos Core y consumo privado en main; web excluido. Documentos exclusivos de ramas SDK/MCP excluidos del merge. Validación mediante checks CI de cada PR y seguimiento de despliegue infraestructura.
+
+## 2026-11-04T05:33:19.959487+00:00 · saulchoque · Codex
+
+- **Sesión:** n/d
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-sdk, tilcai-mcp, documentation, tilcai-infrastructure, tilcai-web, tilcai-cctp-engine, .github
+
+### Prompt
+
+> actualiza los repos locales de tilcai para trabajar con las verisones mas recientes
+
+### Salida
+
+Referencias remotas actualizadas mediante fetch/prune por repositorio. Core, SDK, MCP y documentación locales pasan a main actualizado. Infraestructura incluye el squash de PR48 (1de7888); main se actualizó preservando el historial local sin commit y el directorio principal usa work/main-2026-11-04. Web, CCTP y .github estaban al día. Se conservan ramas auxiliares y cambios locales; no se integra web. Dependencias de los dos worktrees actuales de infraestructura instaladas con npm ci desde el paquete privado.
+
+## 2026-11-04T05:41:31.618722+00:00 · saulchoque · Codex
+
+- **Sesión:** n/d
+- **Rama:** docs/integration-status-2026-11-04
+- **Repositorios:** tilcai-infrastructure, documentation
+
+### Prompt
+
+> posteriormente cierra las issues y prs terminados y analiza las ramas en tilcai-infrastructure, quita las que ya estan incluidas en main, luego usando solo las mias mergea a main las que aun no lo estan, luego actualiza la documentacion en tilcai (en el repo 'documentation' y en el repositorio mismo)
+
+### Salida
+
+PR48 integrada en 1de7888; credenciales propias integradas por PR53 en c2f57a9 con migración 8, 253 tests TypeScript y suites offline/CI correctos. Limpieza remota de ramas integradas/sustituidas y limpieza local preservando worktree de relayer con cambios. Actualizados estado central, credenciales, índice y auditoría. Issues #28/#35/#42 conservan revisión independiente pendiente y #32 también D-05; se publican evidencias sin cerrar aceptaciones inexistentes. Web y PRs ajenas permanecen fuera de las integraciones.
