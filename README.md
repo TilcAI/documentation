@@ -29,7 +29,7 @@ Se conservan en la raíz, para no romper enlaces, cuatro **fuentes fechadas**: [
 - [Plan de issues de SaulChoque](3-CONSTRUCCION/PLAN_ISSUES_SAULCHOQUE_2026-11-01.md). Análisis del backend y criterios de implementación.
 
 - [Decisión API keys/OAuth](3-CONSTRUCCION/DECISION_AUTENTICACION_TERCEROS_2026-11-01.md). API keys para integraciones de backend; OAuth para futura delegación de usuario/MCP remoto.
-- [Implementación de credenciales](3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md): CLI, caducidad, rotación, SDK 0.3.0 y MCP.
+- [Implementación de credenciales](3-CONSTRUCCION/CREDENCIALES_TERCEROS_IMPLEMENTACION_2026-11-01.md): CLI, caducidad, rotación, SDK 0.4.0 y MCP.
 - [Resultados de Vault/Soroban](3-CONSTRUCCION/RESULTADOS_VAULT_SOROBAN_2026-11-01.md) e [investigación TTL](3-CONSTRUCCION/INVESTIGACION_TTL_SOROBAN_2026-11-01.md).
 - [Estado de repositorios y entrega](3-CONSTRUCCION/ESTADO_REPOSITORIOS_2026-11-01.md).
 
@@ -46,4 +46,6 @@ Este repositorio reúne la evidencia de la entrega: [ramas y commits](3-CONSTRUC
 Las ramas están publicadas; las issues #28/#35/#42 requieren revisión y #32 mantiene investigación pendiente.
 La facturación SIN sigue en diseño. Cada documento distingue pruebas locales, propuestas y despliegues.
 
-- [Centralización de Core 0.1.0](3-CONSTRUCCION/CENTRALIZACION_CORE_2026-11-02.md): contratos compartidos, consumidores, compatibilidad y distribución pendiente.
+- [Centralización de Core 0.1.0](3-CONSTRUCCION/CENTRALIZACION_CORE_2026-11-02.md): contratos compartidos, consumidores, compatibilidad y distribución privada en GitHub Packages.
+
+- [Estado actual, merges y limpieza de ramas · 2026-11-04](3-CONSTRUCCION/INTEGRACION_Y_RAMA_AUDITORIA_2026-11-04.md).

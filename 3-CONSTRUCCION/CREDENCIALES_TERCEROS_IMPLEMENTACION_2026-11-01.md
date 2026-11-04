@@ -5,7 +5,7 @@ Branch: feat/third-party-credentials, based on 73805cc (Vault/Soroban fixes).
 ## Implemented
 
 Operator CLI creates tenants, issues expiring/scoped keys and rotates/revokes them. New keys
-are restricted to the configured testnet/mainnet environment. SQLite migration 7 is additive;
+are restricted to the configured testnet/mainnet environment. SQLite migration 8 is additive;
 key events contain IDs, kinds and timestamps only. Authentication reads revocation, expiry
 and tenant status each time; last-use updates are throttled to once a minute.
 
@@ -41,7 +41,7 @@ merely by issuing a new tenant key: reconcile ownership and plan migration expli
 partners need access to historical payments.
 
 Deploy backend migration before SDK/MCP introspection usage. Back up SQLite, verify migration
-ID availability (6 is reserved for the existing QR branch; this change uses 7), run migration on a restored copy,
+ID availability (6 is QR; 7 is sponsored holds already integrated; this change uses 8), run migration on a restored copy,
 then confirm legacy operator and one test tenant. Restoring old code would ignore new expiry
 and environment rules; do not roll back to an auth implementation that bypasses those rules.
 A rollback requires revoking affected secrets and restoring a reviewed compatible release.
@@ -51,7 +51,7 @@ change exist only in disposable databases. No production credentials were issued
 
 ## SDK and MCP
 
-SDK 0.3.0 adds `tilcai.auth.context()` and `apiKeyProvider` (sync or async) resolved on each
+SDK 0.4.0 adds `tilcai.auth.context()` and `apiKeyProvider` (sync or async) resolved on each
 request/retry; it takes priority over static/environment key. On provider failure no request
 is sent and details are redacted. Authenticated requests and event streams reject redirects.
 
@@ -85,3 +85,9 @@ Ramas feat/third-party-credentials publicadas: infrastructure b47165e (implement
 60e3199, incluye fixes Vault/Soroban), SDK f27f333 y MCP 2417706. La publicación no
 acredita despliegue ni emisión de credenciales reales. Ver el
 [estado de repositorios](ESTADO_REPOSITORIOS_2026-11-01.md).
+
+## Integration update · 2026-11-04
+
+PR #53 combines the credential branch with current main while preserving the latest Vault safeguards. Migration 8 follows deployed migrations 1–7 without rewriting them; upgrade tests cover schemas 5 and 7. Historical issued keys default to testnet and retain no expiry until rotated. Before mainnet, inventory and explicitly reissue keys in the intended environment. Do not silently reinterpret historical authorizations.
+
+SDK and MCP consume the private Core package @tilcai/core@0.1.0 through the tilcai-core alias. Their repository CI access is configured; web access/integration remains deferred until the monitor is separated. No real partner credentials were issued during tests.

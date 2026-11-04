@@ -1,6 +1,6 @@
 # Estado de repositorios y entrega
 
-Actualizado: 2026-11-02 UTC. Reemplaza el estado previo a publicación del 1 de noviembre.
+Estado histórico de 2026-11-02 UTC. Estado actual: [integración y auditoría del 4 de noviembre](INTEGRACION_Y_RAMA_AUDITORIA_2026-11-04.md). Reemplaza el estado previo a publicación del 1 de noviembre.
 Las ramas locales se publicaron mediante push. Publicación no acredita merge, despliegue
 ni validación contra redes reales. Los historiales conservan sus salidas originales.
 
@@ -52,7 +52,7 @@ Vault Rust 12. Typecheck backend/SDK/MCP, builds SDK/MCP y smoke ESM/CJS del SDK
 La corrección QR posterior pasó las 15 pruebas de QR Simple. No se volvieron a ejecutar
 estas suites al publicar configuración/historiales ni al editar esta documentación.
 
-Migración 6 corresponde a QR y 7 a autenticación. Comprobar orden al integrar ramas, sin
+Actualización de integración: migración 6 corresponde a QR, 7 a cuotas patrocinadas y 8 a autenticación. Comprobar orden al integrar ramas, sin
 cambiar migraciones aplicadas. Desplegar backend compatible antes de SDK/MCP con introspección.
 No se emitieron claves reales de socios ni se ejecutaron pagos o despliegues en esta entrega.
 La facturación sigue siendo propuesta; la investigación TTL sigue parcial.
