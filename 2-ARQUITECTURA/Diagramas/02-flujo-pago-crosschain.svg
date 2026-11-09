@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1640 1000" width="1640" height="1000" font-family="Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-label="Secuencia de un pago crosschain gasless de Avalanche a Stellar: cotizar, crear, firmar, burn, atestación de Circle Iris, mint y liquidación con recibo.">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<defs><marker id="ahadb5bd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#adb5bd"/></marker><marker id="ah1e1e1e" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#1e1e1e"/></marker><marker id="ah495057" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#495057"/></marker></defs>
+<text x="40" y="50" font-size="26" font-weight="700" text-anchor="start" fill="#1e1e1e" >Pago crosschain gasless · Avalanche → Stellar (CCTP V2)</text>
+<text x="40" y="76" font-size="14" text-anchor="start" fill="#495057" >Once pasos. El pagador no gasta gas: el Relayer paga el burn en Avalanche y el mint en Stellar.</text>
+<rect x="225" y="80" width="390" height="800" rx="16" fill="#d3f9d8" fill-opacity=".35" stroke="#2f9e44" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="241" y="106" font-size="15" font-weight="700" fill="#2f9e44">mismo proceso: tilcai</text>
+<rect x="45" y="120" width="150" height="56" rx="10" fill="#dbe4ff" stroke="#3b5bdb" stroke-width="2"/>
+<text x="120" y="142.825" font-size="15" font-weight="700" text-anchor="middle" fill="#1e1e1e">Pagador</text>
+<text x="120" y="164.575" font-size="12" text-anchor="middle" fill="#495057">wallet o passkey</text>
+<polyline points="120,176 120,880" fill="none" stroke="#adb5bd" stroke-width="2" stroke-dasharray="7 5"  stroke-linejoin="round"/>
+<rect x="245" y="120" width="150" height="56" rx="10" fill="#d3f9d8" stroke="#2f9e44" stroke-width="2"/>
+<text x="320" y="142.825" font-size="15" font-weight="700" text-anchor="middle" fill="#1e1e1e">TilcAI API</text>
+<text x="320" y="164.575" font-size="12" text-anchor="middle" fill="#495057">HTTP + Bearer</text>
+<polyline points="320,176 320,880" fill="none" stroke="#adb5bd" stroke-width="2" stroke-dasharray="7 5"  stroke-linejoin="round"/>
+<rect x="445" y="120" width="150" height="56" rx="10" fill="#d3f9d8" stroke="#2f9e44" stroke-width="2"/>
+<text x="520" y="142.825" font-size="15" font-weight="700" text-anchor="middle" fill="#1e1e1e">TilcAI worker</text>
+<text x="520" y="164.575" font-size="12" text-anchor="middle" fill="#495057">concilia cada ~4 s</text>
+<polyline points="520,176 520,880" fill="none" stroke="#adb5bd" stroke-width="2" stroke-dasharray="7 5"  stroke-linejoin="round"/>
+<rect x="645" y="120" width="150" height="56" rx="10" fill="#ffe8cc" stroke="#e8590c" stroke-width="2"/>
+<text x="720" y="142.825" font-size="15" font-weight="700" text-anchor="middle" fill="#1e1e1e">Relayer</text>
+<text x="720" y="164.575" font-size="12" text-anchor="middle" fill="#495057">OpenZeppelin</text>
+<polyline points="720,176 720,880" fill="none" stroke="#adb5bd" stroke-width="2" stroke-dasharray="7 5"  stroke-linejoin="round"/>
+<rect x="845" y="120" width="150" height="56" rx="10" fill="#e5dbff" stroke="#7048e8" stroke-width="2"/>
+<text x="920" y="142.825" font-size="15" font-weight="700" text-anchor="middle" fill="#1e1e1e">Avalanche</text>
+<text x="920" y="164.575" font-size="12" text-anchor="middle" fill="#495057">router + CCTP V2</text>
+<polyline points="920,176 920,880" fill="none" stroke="#adb5bd" stroke-width="2" stroke-dasharray="7 5"  stroke-linejoin="round"/>
+<rect x="1045" y="120" width="150" height="56" rx="10" fill="#f1f3f5" stroke="#495057" stroke-width="2"/>
+<text x="1120" y="142.825" font-size="15" font-weight="700" text-anchor="middle" fill="#1e1e1e">Circle Iris</text>
+<text x="1120" y="164.575" font-size="12" text-anchor="middle" fill="#495057">atestaciones</text>
+<polyline points="1120,176 1120,880" fill="none" stroke="#adb5bd" stroke-width="2" stroke-dasharray="7 5"  stroke-linejoin="round"/>
+<rect x="1245" y="120" width="150" height="56" rx="10" fill="#e5dbff" stroke="#7048e8" stroke-width="2"/>
+<text x="1320" y="142.825" font-size="15" font-weight="700" text-anchor="middle" fill="#1e1e1e">Stellar</text>
+<text x="1320" y="164.575" font-size="12" text-anchor="middle" fill="#495057">CctpForwarder</text>
+<polyline points="1320,176 1320,880" fill="none" stroke="#adb5bd" stroke-width="2" stroke-dasharray="7 5"  stroke-linejoin="round"/>
+<text x="1540" y="140" font-size="14" font-weight="700" text-anchor="middle" fill="#495057" >Estado del pago</text>
+<polyline points="120,232 320,232" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="220" y="208.5" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">1  POST /quotes</text>
+<text x="220" y="224.125" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">cotiza ruta y comisión</text>
+<polyline points="120,294 320,294" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="220" y="270.5" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">2  POST /payments  (Idempotency-Key)</text>
+<text x="220" y="286.125" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">crea el pago y las llamadas</text>
+<rect x="1450" y="278" width="180" height="32" rx="10" fill="#fff3bf" stroke="#f08c00" stroke-width="2"/>
+<text x="1540" y="298.875" font-size="13" font-weight="700" text-anchor="middle" fill="#1e1e1e">AWAITING_BURN</text>
+<polyline points="120,356 320,356" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="220" y="332.5" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">3  POST …/authorization</text>
+<text x="220" y="348.125" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">firma EIP-3009 del pagador</text>
+<polyline points="320,418 720,418" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="520" y="394.5" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">4  envía el burn con la firma</text>
+<text x="520" y="410.125" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">(solo puede enviar lo firmado)</text>
+<rect x="1450" y="402" width="180" height="32" rx="10" fill="#fff3bf" stroke="#f08c00" stroke-width="2"/>
+<text x="1540" y="422.875" font-size="13" font-weight="700" text-anchor="middle" fill="#1e1e1e">BURN_SUBMITTED</text>
+<polyline points="720,480 920,480" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="820" y="456.5" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">5  depositForBurn en el router</text>
+<text x="820" y="472.125" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">el Relayer paga el gas (AVAX)</text>
+<polyline points="520,542 920,542" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="720" y="518.5" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">6  lee recibo y evento DepositForBurn</text>
+<text x="720" y="534.125" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">== cotización</text>
+<rect x="1450" y="526" width="180" height="32" rx="10" fill="#fff3bf" stroke="#f08c00" stroke-width="2"/>
+<text x="1540" y="546.875" font-size="13" font-weight="700" text-anchor="middle" fill="#1e1e1e">BURN_CONFIRMED</text>
+<polyline points="520,604 1120,604" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="820" y="580.5" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">7  pide la atestación</text>
+<text x="820" y="596.125" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">/v2/messages</text>
+<polyline points="1120,666 520,666" fill="none" stroke="#495057" stroke-width="2" marker-end="url(#ah495057)" stroke-linejoin="round"/>
+<text x="820" y="642.5" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">8  mensaje + firma: se decodifica</text>
+<text x="820" y="658.125" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">y se vuelve a verificar</text>
+<rect x="1450" y="650" width="180" height="32" rx="10" fill="#fff3bf" stroke="#f08c00" stroke-width="2"/>
+<text x="1540" y="670.875" font-size="13" font-weight="700" text-anchor="middle" fill="#1e1e1e">ATTESTED</text>
+<polyline points="520,728 720,728" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="620" y="704.5" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">9  mint_and_forward</text>
+<text x="620" y="720.125" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">idempotente por el nonce CCTP</text>
+<rect x="1450" y="712" width="180" height="32" rx="10" fill="#fff3bf" stroke="#f08c00" stroke-width="2"/>
+<text x="1540" y="732.875" font-size="13" font-weight="700" text-anchor="middle" fill="#1e1e1e">MINT_SUBMITTED</text>
+<polyline points="720,790 1320,790" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="1020" y="766.5" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">10  tx del mint · el Relayer paga el XLM</text>
+<text x="1020" y="782.125" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">USDC llega al comercio (payTo)</text>
+<polyline points="520,852 1320,852" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="920" y="828.5" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">11  lee tx SUCCESS y nonce usado</text>
+<text x="920" y="844.125" font-size="12.5" text-anchor="middle" fill="#1e1e1e" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">recibo + evento + SETTLED en 1 transacción</text>
+<rect x="1450" y="836" width="180" height="32" rx="10" fill="#d3f9d8" stroke="#2f9e44" stroke-width="2"/>
+<text x="1540" y="856.875" font-size="13" font-weight="700" text-anchor="middle" fill="#1e1e1e">SETTLED</text>
+<rect x="120" y="905" width="1400" height="70" rx="10" fill="#ffe3e3" stroke="#e03131" stroke-width="2"/>
+<text x="820" y="926" font-size="14" font-weight="700" text-anchor="middle" fill="#1e1e1e">Si algo no cuadra no se adivina</text>
+<text x="820" y="948" font-size="12.5" text-anchor="middle" fill="#495057">Un burn que no aparece o una atestación que no coincide pasan a UNCERTAIN: no se mintea y nunca se marca FAILED sin evidencia.</text>
+<text x="820" y="964.25" font-size="12.5" text-anchor="middle" fill="#495057">Un burn respalda un solo pago y un nonce CCTP una sola liquidación (índices únicos): reintentar nunca duplica el cobro.</text>
+</svg>

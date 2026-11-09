@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 960" width="1500" height="960" font-family="Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-label="Del push a producción: GitHub Actions verifica, publica la imagen en GHCR y despliega por SSH restringido a un servidor Debian con docker compose (tilcai, relayer, redis) y una instancia mainnet separada.">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<defs><marker id="ah1e1e1e" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#1e1e1e"/></marker></defs>
+<text x="40" y="50" font-size="26" font-weight="700" text-anchor="start" fill="#1e1e1e" >Despliegue continuo · del commit al servidor</text>
+<text x="40" y="76" font-size="14" text-anchor="start" fill="#495057" >GitHub Actions verifica y publica la imagen; un wrapper restringido la despliega y vuelve atrás si no arranca sano.</text>
+<rect x="40" y="100" width="1180" height="300" rx="16" fill="#dbe4ff" fill-opacity=".35" stroke="#3b5bdb" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="56" y="126" font-size="15" font-weight="700" fill="#3b5bdb">GitHub</text>
+<rect x="70" y="170" width="170" height="100" rx="10" fill="#dbe4ff" stroke="#3b5bdb" stroke-width="2"/>
+<text x="155" y="214.875" font-size="16" font-weight="700" text-anchor="middle" fill="#1e1e1e">Desarrollador</text>
+<text x="155" y="237.375" font-size="12.5" text-anchor="middle" fill="#495057">push o Pull Request</text>
+<text x="70" y="294" font-size="12" text-anchor="start" fill="#495057" >En un PR solo corre verify:</text>
+<text x="70" y="309" font-size="12" text-anchor="start" fill="#495057" >ni publica ni despliega.</text>
+<rect x="290" y="150" width="280" height="150" rx="10" fill="#d3f9d8" stroke="#2f9e44" stroke-width="2"/>
+<text x="430" y="195.5" font-size="16" font-weight="700" text-anchor="middle" fill="#1e1e1e">Job  verify</text>
+<text x="430" y="218" font-size="12.5" text-anchor="middle" fill="#495057">lint · typecheck · pruebas</text>
+<text x="430" y="234.25" font-size="12.5" text-anchor="middle" fill="#495057">git diff --check</text>
+<text x="430" y="250.5" font-size="12.5" text-anchor="middle" fill="#495057">build de la imagen Docker</text>
+<text x="430" y="266.75" font-size="12.5" text-anchor="middle" fill="#495057">smoke del contenedor real</text>
+<rect x="290" y="340" width="280" height="50" rx="10" fill="#f1f3f5" stroke="#495057" stroke-width="2"/>
+<text x="430" y="370.25" font-size="14" font-weight="700" text-anchor="middle" fill="#1e1e1e">GitHub Packages  ·  @tilcai/core</text>
+<rect x="620" y="170" width="210" height="100" rx="10" fill="#ffe8cc" stroke="#e8590c" stroke-width="2"/>
+<text x="725" y="206.75" font-size="16" font-weight="700" text-anchor="middle" fill="#1e1e1e">Publica la imagen</text>
+<text x="725" y="229.25" font-size="12.5" text-anchor="middle" fill="#495057">solo en main</text>
+<text x="725" y="245.5" font-size="12.5" text-anchor="middle" fill="#495057">ghcr.io/tilcai/tilcai-api:&lt;sha&gt;</text>
+<rect x="880" y="170" width="300" height="100" rx="10" fill="#ffe8cc" stroke="#e8590c" stroke-width="2"/>
+<text x="1030" y="206.75" font-size="16" font-weight="700" text-anchor="middle" fill="#1e1e1e">Job  deploy  (production)</text>
+<text x="1030" y="229.25" font-size="12.5" text-anchor="middle" fill="#495057">solo en main, tras verify</text>
+<text x="1030" y="245.5" font-size="12.5" text-anchor="middle" fill="#495057">entra por SSH con clave restringida</text>
+<polyline points="240,220 290,214.5" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<polyline points="430,340 430,300" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="440" y="324" font-size="12" text-anchor="start" fill="#495057" >npm ci</text>
+<polyline points="570,214.5 620,220" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="595" y="204" font-size="12" text-anchor="middle" fill="#495057" >verde</text>
+<polyline points="830,220 880,220" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<rect x="40" y="450" width="1180" height="470" rx="16" fill="#ffe8cc" fill-opacity=".35" stroke="#e8590c" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="56" y="476" font-size="15" font-weight="700" fill="#e8590c">Servidor Debian 13  ·  /srv/tilcai  ·  APIs solo en loopback, acceso por SSH</text>
+<rect x="70" y="520" width="300" height="190" rx="10" fill="#ffe8cc" stroke="#e8590c" stroke-width="2"/>
+<text x="220" y="577.375" font-size="16" font-weight="700" text-anchor="middle" fill="#1e1e1e">tilcai-deploy  (wrapper)</text>
+<text x="220" y="599.875" font-size="12.5" text-anchor="middle" fill="#495057">sudo solo al script de release</text>
+<text x="220" y="616.125" font-size="12.5" text-anchor="middle" fill="#495057">bloqueo (lock) · descarga :sha de GHCR</text>
+<text x="220" y="632.375" font-size="12.5" text-anchor="middle" fill="#495057">espera los healthchecks</text>
+<text x="220" y="648.625" font-size="12.5" text-anchor="middle" fill="#495057">rollback a la imagen anterior</text>
+<text x="220" y="664.875" font-size="12.5" text-anchor="middle" fill="#495057">(no revierte migraciones de la base)</text>
+<rect x="410" y="500" width="780" height="270" rx="16" fill="#d3f9d8" fill-opacity=".35" stroke="#2f9e44" stroke-width="2" stroke-dasharray="8 6"/>
+<text x="426" y="526" font-size="15" font-weight="700" fill="#2f9e44">docker compose  ·  proyecto tilcai (testnet)</text>
+<rect x="440" y="550" width="190" height="100" rx="10" fill="#d3f9d8" stroke="#2f9e44" stroke-width="2"/>
+<text x="535" y="586.75" font-size="16" font-weight="700" text-anchor="middle" fill="#1e1e1e">tilcai</text>
+<text x="535" y="609.25" font-size="12.5" text-anchor="middle" fill="#495057">API + worker</text>
+<text x="535" y="625.5" font-size="12.5" text-anchor="middle" fill="#495057">127.0.0.1:8787</text>
+<rect x="710" y="550" width="190" height="100" rx="10" fill="#ffe8cc" stroke="#e8590c" stroke-width="2"/>
+<text x="805" y="586.75" font-size="16" font-weight="700" text-anchor="middle" fill="#1e1e1e">relayer</text>
+<text x="805" y="609.25" font-size="12.5" text-anchor="middle" fill="#495057">OpenZeppelin</text>
+<text x="805" y="625.5" font-size="12.5" text-anchor="middle" fill="#495057">127.0.0.1:8080</text>
+<rect x="980" y="550" width="190" height="100" rx="10" fill="#fff3bf" stroke="#f08c00" stroke-width="2"/>
+<text x="1075" y="594.875" font-size="16" font-weight="700" text-anchor="middle" fill="#1e1e1e">redis 7</text>
+<text x="1075" y="617.375" font-size="12.5" text-anchor="middle" fill="#495057">colas del relayer</text>
+<rect x="440" y="695" width="190" height="56" rx="10" fill="#fff3bf" stroke="#f08c00" stroke-width="2"/>
+<text x="535" y="717.775" font-size="14" font-weight="700" text-anchor="middle" fill="#1e1e1e">tilcai-data</text>
+<text x="535" y="738.775" font-size="11.5" text-anchor="middle" fill="#495057">SQLite  (+ Litestream opcional)</text>
+<rect x="710" y="695" width="190" height="56" rx="10" fill="#ffe3e3" stroke="#e03131" stroke-width="2"/>
+<text x="805" y="717.4" font-size="13" font-weight="700" text-anchor="middle" fill="#1e1e1e">keystore del firmante</text>
+<text x="805" y="738.15" font-size="11.5" text-anchor="middle" fill="#495057">KEYSTORE_JSON_B64 (secreto)</text>
+<rect x="980" y="695" width="190" height="56" rx="10" fill="#fff3bf" stroke="#f08c00" stroke-width="2"/>
+<text x="1075" y="717.775" font-size="14" font-weight="700" text-anchor="middle" fill="#1e1e1e">redis-data</text>
+<text x="1075" y="738.775" font-size="11.5" text-anchor="middle" fill="#495057">volumen</text>
+<rect x="410" y="800" width="780" height="90" rx="10" fill="#ffe3e3" stroke="#e03131" stroke-width="2"/>
+<text x="800" y="831" font-size="14" font-weight="700" text-anchor="middle" fill="#1e1e1e">Instancia mainnet  ·  proyecto tilcai-mainnet  (127.0.0.1:18787)</text>
+<text x="800" y="853" font-size="12.5" text-anchor="middle" fill="#495057">misma imagen, con base, claves, volumen y relayer propios.</text>
+<text x="800" y="869.25" font-size="12.5" text-anchor="middle" fill="#495057">Arranca en solo lectura: mueve fondos solo con MAINNET_TRANSACTIONS_ENABLED=true.</text>
+<rect x="1250" y="520" width="210" height="170" rx="10" fill="#f1f3f5" stroke="#495057" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="1355" y="575.5" font-size="16" font-weight="700" text-anchor="middle" fill="#1e1e1e">Otras plataformas</text>
+<text x="1355" y="598" font-size="12.5" text-anchor="middle" fill="#495057">Cloud Run, AWS o Azure:</text>
+<text x="1355" y="614.25" font-size="12.5" text-anchor="middle" fill="#495057">las mismas imágenes.</text>
+<text x="1355" y="630.5" font-size="12.5" text-anchor="middle" fill="#495057">Ver deploy/README.md y</text>
+<text x="1355" y="646.75" font-size="12.5" text-anchor="middle" fill="#495057">deploy/cloud-run/</text>
+<polyline points="1120,270 1120,330 1120,430 220,430 220,520" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="660" y="423" font-size="12" text-anchor="middle" fill="#495057" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">SSH con forced command  ·  el token de GHCR viaja por stdin</text>
+<polyline points="370,596 440,600" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<polyline points="630,600 710,600" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<polyline points="900,600 980,600" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<polyline points="535,650 535,695" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" marker-start="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<polyline points="805,650 805,695" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<polyline points="1075,650 1075,695" fill="none" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah1e1e1e)" marker-start="url(#ah1e1e1e)" stroke-linejoin="round"/>
+<text x="670" y="567" font-size="11" text-anchor="middle" fill="#495057" >HTTP +</text>
+<text x="670" y="580.75" font-size="11" text-anchor="middle" fill="#495057" >Bearer</text>
+</svg>
