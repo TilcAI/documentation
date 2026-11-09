@@ -14,7 +14,7 @@
 
 | Ubicación | Uso |
 | --- | --- |
-| `0-OFICIAL/` | Definición vigente, evidencia, reglas para el pitch. |
+| `0-OFICIAL/` | Definición vigente, evidencia, reglas para el pitch. [`Documentos-oficiales/`](0-OFICIAL/Documentos-oficiales/) reúne los cinco documentos de cara al público, en Excalidraw y PDF: whitepaper, one-pager, dos diagramas de arquitectura y Kanban de negocios. La versión en inglés está en [`Documentos-oficiales/en/`](0-OFICIAL/Documentos-oficiales/en/). |
 | `1-PRESENTACION/` | Memoria del primer pitch del 2 de octubre. |
 | `2-ARQUITECTURA/` | [Mapa de lectura](2-ARQUITECTURA/README.md), diagramas y diseño de integración. |
 | `3-CONSTRUCCION/` | Backlog asignado y criterios de aceptación. |
