@@ -49,3 +49,10 @@ La facturación SIN sigue en diseño. Cada documento distingue pruebas locales, 
 - [Centralización de Core 0.1.0](3-CONSTRUCCION/CENTRALIZACION_CORE_2026-11-02.md): contratos compartidos, consumidores, compatibilidad y distribución privada en GitHub Packages.
 
 - [Estado actual, merges y limpieza de ramas · 2026-11-04](3-CONSTRUCCION/INTEGRACION_Y_RAMA_AUDITORIA_2026-11-04.md).
+
+
+## Solana · 2026-11-27
+
+- [Plan SCA, rampa, x402 y crosschain](3-CONSTRUCCION/PLAN_INTEGRACION_SOLANA_2026-11-27.md).
+- [Implementación y emisión Devnet finalizada mediante el fork del relayer](3-CONSTRUCCION/SOLANA_INCREMENTO_1_2026-11-27.md): 461 pruebas, evidencia pública y límites del incremento.
+- [Reorganización Business Notion](3-CONSTRUCCION/NOTION_BUSINESS_REORGANIZACION_2026-11-27.md): requisitos en bloques existentes; cuota sin liberación por borrado.

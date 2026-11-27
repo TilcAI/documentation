@@ -609,3 +609,157 @@ Se añadieron dos diagramas SVG en `2-ARQUITECTURA/Diagramas/`, que complementan
 ### Salida
 
 Se generaron `05-modelo-confianza-ciclo-orden.excalidraw` (121 elementos) y `06-estado-proyecto-nov-2026.excalidraw` (97) en `2-ARQUITECTURA/Diagramas/`, con el mismo esquema que los cuatro existentes y a partir de la misma fuente que los `.svg`. Limitaciones: sin negrita y flechas sin anclar a las cajas. Se corrigió la nota de `Diagramas/README.md` que decía que 05 y 06 no tenían `.excalidraw`. Sin commit. Corrige la entrada anterior (2026-11-08T23:39:54Z).
+
+## 2026-11-27T06:14:35.995590+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; registro consolidado tras recuperar contexto; hora original del prompt no expuesta.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> Analiza el estado de tilcai y crea un plan de integracion de solana
+
+### Salida
+
+Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.
+
+## 2026-11-27T06:14:35.995590+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; registro consolidado tras recuperar contexto; hora original del prompt no expuesta.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> las funciones mas importantes son emitir scas en solana, rampa bob a usdc en solana, x402 support y corsschain
+
+### Salida
+
+Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.
+
+## 2026-11-27T06:14:35.995590+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; registro consolidado tras recuperar contexto; hora original del prompt no expuesta.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> libera espacio en business notion y organiza los bloques para que tus docs encajen y tengan coherencia con el resto
+
+### Salida
+
+Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.
+
+## 2026-11-27T06:14:35.995590+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; registro consolidado tras recuperar contexto; hora original del prompt no expuesta.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> genial, comienza con la implementacion
+
+### Salida
+
+Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.
+
+## 2026-11-27T06:14:35.995590+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; registro consolidado tras recuperar contexto; hora original del prompt no expuesta.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> estas usando el relayer de openzeppelin forkeado?
+
+### Salida
+
+Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.
+
+## 2026-11-27T06:14:35.995590+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; registro consolidado tras recuperar contexto; hora original del prompt no expuesta.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> recuerda usar el relayer
+
+### Salida
+
+Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.
+
+## 2026-11-27T06:14:35.995590+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; registro consolidado tras recuperar contexto; hora original del prompt no expuesta.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> reinicia el relayer local y usa los datos del relayer
+
+### Salida
+
+Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.
+
+## 2026-11-27T06:14:35.995590+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; registro consolidado tras recuperar contexto; hora original del prompt no expuesta.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> si no es posible conectate a ssh saul-bms y usa su relayer, actualiza su repositorio y recontruye la imagen de docker de ser necesario
+
+### Salida
+
+Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.
+
+## 2026-11-27T06:14:35.995590+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; registro consolidado tras recuperar contexto; hora original del prompt no expuesta.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> el relayer encontrado es el  que corresponde a mi fork?
+
+### Salida
+
+Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.
+
+## 2026-11-27T06:14:35.995590+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; registro consolidado tras recuperar contexto; hora original del prompt no expuesta.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> una vez terminado tus cambios para solana haz push a main y verifica que los cambios se reflejen en produccion ssh saul-tilcai-lor
+
+### Salida
+
+Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.
+
+## 2026-11-27T06:14:35.995590+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; registro consolidado tras recuperar contexto; hora original del prompt no expuesta.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> listo
+
+### Salida
+
+Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.

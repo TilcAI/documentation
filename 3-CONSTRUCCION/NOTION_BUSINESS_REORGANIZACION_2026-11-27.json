@@ -1,0 +1,619 @@
+{
+  "date": "2026-11-27",
+  "scope": "Bloques de producto y navegación previos a la reorganización; sin Test Accounts, secretos ni expedientes personales",
+  "pages": [
+    {
+      "id": "3e2f8393-1c2d-809b-83b7-df3a338fbd5d",
+      "before": {
+        "results": [
+          {
+            "id": "3e2f8393-1c2d-8003-869d-ca683cf476b6",
+            "type": "paragraph",
+            "has_children": false,
+            "paragraph": {
+              "rich_text": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Reputable",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": true,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Reputable",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": " (Nombre provisional) es una infraestructura backend Web3 diseñada para dotar de identidad, reputación y capacidades operativas a agentes autónomos de Inteligencia Artificial. La plataforma actúa como un puente entre microservicios impulsados por IA y las redes blockchain, permitiendo que los modelos de lenguaje (LLMs) interactúen con APIs externas, gestionen líneas de crédito y realicen pagos atómicos de máquina a máquina de forma descentralizada y automatizada.",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": " (Nombre provisional) es una infraestructura backend Web3 diseñada para dotar de identidad, reputación y capacidades operativas a agentes autónomos de Inteligencia Artificial. La plataforma actúa como un puente entre microservicios impulsados por IA y las redes blockchain, permitiendo que los modelos de lenguaje (LLMs) interactúen con APIs externas, gestionen líneas de crédito y realicen pagos atómicos de máquina a máquina de forma descentralizada y automatizada.",
+                  "href": null
+                }
+              ],
+              "icon": null,
+              "color": "default"
+            }
+          },
+          {
+            "id": "3e2f8393-1c2d-803a-ac5d-f8d307c5d920",
+            "type": "child_page",
+            "has_children": true,
+            "child_page": {
+              "title": "Funcionalidades"
+            }
+          },
+          {
+            "id": "3e2f8393-1c2d-8083-9666-ec35b1ae172a",
+            "type": "child_page",
+            "has_children": true,
+            "child_page": {
+              "title": "Stack"
+            }
+          },
+          {
+            "id": "3e2f8393-1c2d-808e-9d87-ec9b64b3bc2c",
+            "type": "paragraph",
+            "has_children": false,
+            "paragraph": {
+              "rich_text": [],
+              "icon": null,
+              "color": "default"
+            }
+          },
+          {
+            "id": "3edf8393-1c2d-807b-b280-f3bcd4d08b93",
+            "type": "child_page",
+            "has_children": true,
+            "child_page": {
+              "title": "Test Accounts"
+            }
+          }
+        ],
+        "has_more": false
+      }
+    },
+    {
+      "id": "3e2f8393-1c2d-803a-ac5d-f8d307c5d920",
+      "before": {
+        "results": [
+          {
+            "id": "3e2f8393-1c2d-80ad-82cf-f451edcf608b",
+            "type": "bulleted_list_item",
+            "has_children": false,
+            "bulleted_list_item": {
+              "rich_text": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Abstracción de Cuentas (Account Abstraction - AA):",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": true,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Abstracción de Cuentas (Account Abstraction - AA):",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": " Despliega rieles de pago y crea cuantas cuentas inteligentes (\"AA accounts\") sean necesarias dedicadas para cada agente. Estas cuentas son escalables y pueden configurarse con reglas avanzadas como aprobaciones multifirma (multisig), límites de frecuencia de uso (rate limits), limites de gasto, etc.",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": " Despliega rieles de pago y crea cuantas cuentas inteligentes (\"AA accounts\") sean necesarias dedicadas para cada agente. Estas cuentas son escalables y pueden configurarse con reglas avanzadas como aprobaciones multifirma (multisig), límites de frecuencia de uso (rate limits), limites de gasto, etc.",
+                  "href": null
+                }
+              ],
+              "color": "default"
+            }
+          },
+          {
+            "id": "3e2f8393-1c2d-80e6-8c1c-d70e822ec213",
+            "type": "bulleted_list_item",
+            "has_children": false,
+            "bulleted_list_item": {
+              "rich_text": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Emisión de Identidad On-Chain:",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": true,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Emisión de Identidad On-Chain:",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": " Genera identificadores únicos de reputación (",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": " Genera identificadores únicos de reputación (",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Reputable Badge ID",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": true,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Reputable Badge ID",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": ") para certificar y rastrear el comportamiento de los agentes.",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": ") para certificar y rastrear el comportamiento de los agentes.",
+                  "href": null
+                }
+              ],
+              "color": "default"
+            }
+          },
+          {
+            "id": "3e2f8393-1c2d-80e4-99b5-f5a14e3eac09",
+            "type": "bulleted_list_item",
+            "has_children": false,
+            "bulleted_list_item": {
+              "rich_text": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Gestión de Líneas de Crédito Automáticas:",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": true,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Gestión de Líneas de Crédito Automáticas:",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": " Crea una línea de crédito por defecto (denominada \"Yellowmeter\") para los agentes. Los usuarios o administradores pueden recargar los fondos de estas cuentas AA a través de una interfaz web mediante rampas o depositando directamente en los contratos inteligentes.",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": " Crea una línea de crédito por defecto (denominada \"Yellowmeter\") para los agentes. Los usuarios o administradores pueden recargar los fondos de estas cuentas AA a través de una interfaz web mediante rampas o depositando directamente en los contratos inteligentes.",
+                  "href": null
+                }
+              ],
+              "color": "default"
+            }
+          },
+          {
+            "id": "3e2f8393-1c2d-804a-ab51-d7e31a5e097a",
+            "type": "bulleted_list_item",
+            "has_children": false,
+            "bulleted_list_item": {
+              "rich_text": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Optimización de Costos (Batching):",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": true,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Optimización de Costos (Batching):",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": " Implementa un sistema de empaquetado de transacciones (",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": " Implementa un sistema de empaquetado de transacciones (",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Tx Batching",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": true,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Tx Batching",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": ") para ahorrar gas en la red. Soporta tanto el empaquetado general como el agrupamiento exclusivo de transacciones personales.",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": ") para ahorrar gas en la red. Soporta tanto el empaquetado general como el agrupamiento exclusivo de transacciones personales.",
+                  "href": null
+                }
+              ],
+              "color": "default"
+            }
+          },
+          {
+            "id": "3e2f8393-1c2d-8072-98d8-c0797989dbcc",
+            "type": "bulleted_list_item",
+            "has_children": false,
+            "bulleted_list_item": {
+              "rich_text": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Procesamiento de Pagos X402:",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": true,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Procesamiento de Pagos X402:",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": " Orquesta toda la arquitectura necesaria para validar, emitir y liquidar micro-transacciones X402 a través de webhooks y notificaciones en tiempo real.",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": " Orquesta toda la arquitectura necesaria para validar, emitir y liquidar micro-transacciones X402 a través de webhooks y notificaciones en tiempo real.",
+                  "href": null
+                }
+              ],
+              "color": "default"
+            }
+          },
+          {
+            "id": "3e2f8393-1c2d-8001-a818-ccdba1a1ebb9",
+            "type": "paragraph",
+            "has_children": false,
+            "paragraph": {
+              "rich_text": [],
+              "icon": null,
+              "color": "default"
+            }
+          }
+        ],
+        "has_more": false
+      }
+    },
+    {
+      "id": "3e2f8393-1c2d-8083-9666-ec35b1ae172a",
+      "before": {
+        "results": [
+          {
+            "id": "3e2f8393-1c2d-806b-b53e-e2a56f9d53e3",
+            "type": "bulleted_list_item",
+            "has_children": false,
+            "bulleted_list_item": {
+              "rich_text": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Integración de IA:",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": true,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Integración de IA:",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": " Model Context Protocol (MCP) para la orquestación estandarizada entre los LLMs y el backend de pagos.",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": " Model Context Protocol (MCP) para la orquestación estandarizada entre los LLMs y el backend de pagos.",
+                  "href": null
+                }
+              ],
+              "color": "default"
+            }
+          },
+          {
+            "id": "3e2f8393-1c2d-8088-8ff9-d6dbeee0f74f",
+            "type": "bulleted_list_item",
+            "has_children": true,
+            "bulleted_list_item": {
+              "rich_text": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Infraestructura Web3 (EVM):",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": true,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Infraestructura Web3 (EVM):",
+                  "href": null
+                }
+              ],
+              "color": "default"
+            }
+          },
+          {
+            "id": "3e2f8393-1c2d-806b-a75b-c9e71dae9698",
+            "type": "bulleted_list_item",
+            "has_children": true,
+            "bulleted_list_item": {
+              "rich_text": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Infraestructura Web3 (Stellar):",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": true,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Infraestructura Web3 (Stellar):",
+                  "href": null
+                }
+              ],
+              "color": "default"
+            }
+          },
+          {
+            "id": "3e2f8393-1c2d-8082-9c3d-c04071fe3fd3",
+            "type": "bulleted_list_item",
+            "has_children": false,
+            "bulleted_list_item": {
+              "rich_text": [
+                {
+                  "type": "text",
+                  "text": {
+                    "content": "Backend Central (Reputable API):",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": true,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": "Backend Central (Reputable API):",
+                  "href": null
+                },
+                {
+                  "type": "text",
+                  "text": {
+                    "content": " Endpoints dedicados para la comunicación interna entre los microservicios de IA (OPTUS BE, Vector MCP) y los facilitadores blockchain.",
+                    "link": null
+                  },
+                  "annotations": {
+                    "bold": false,
+                    "italic": false,
+                    "strikethrough": false,
+                    "underline": false,
+                    "code": false,
+                    "color": "default"
+                  },
+                  "plain_text": " Endpoints dedicados para la comunicación interna entre los microservicios de IA (OPTUS BE, Vector MCP) y los facilitadores blockchain.",
+                  "href": null
+                }
+              ],
+              "color": "default"
+            }
+          }
+        ],
+        "has_more": false
+      }
+    },
+    {
+      "id": "410f8393-1c2d-8018-934d-d26bb63a65d8",
+      "before": {
+        "results": [
+          {
+            "id": "410f8393-1c2d-8004-8316-fd7f966011b6",
+            "type": "paragraph",
+            "has_children": false,
+            "paragraph": {
+              "rich_text": [],
+              "icon": null,
+              "color": "default"
+            }
+          },
+          {
+            "id": "410f8393-1c2d-8077-a562-e5c3ac931b4a",
+            "type": "child_page",
+            "has_children": true,
+            "child_page": {
+              "title": "Formularios"
+            }
+          },
+          {
+            "id": "410f8393-1c2d-8051-891a-e0394eb5c8e8",
+            "type": "child_page",
+            "has_children": true,
+            "child_page": {
+              "title": "Modelo de negocios"
+            }
+          },
+          {
+            "id": "413f8393-1c2d-803f-a8cd-e87f38fd15cc",
+            "type": "child_page",
+            "has_children": true,
+            "child_page": {
+              "title": "Instawards · Paso 2 · OFICIALTilcAI (1)"
+            }
+          }
+        ],
+        "has_more": false
+      }
+    }
+  ],
+  "roadmap_edited_block": {
+    "id": "413f8393-1c2d-8006-a675-dc9730ba4c3e",
+    "type": "paragraph",
+    "has_children": false,
+    "paragraph": {
+      "rich_text": [
+        {
+          "type": "text",
+          "text": {
+            "content": "Este documento define la secuencia de desarrollo de TilcAI, las dependencias técnicas, los criterios de aceptación y las etapas de evolución posteriores a la primera versión controlada en Stellar Mainnet.",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "Este documento define la secuencia de desarrollo de TilcAI, las dependencias técnicas, los criterios de aceptación y las etapas de evolución posteriores a la primera versión controlada en Stellar Mainnet.",
+          "href": null
+        }
+      ],
+      "icon": null,
+      "color": "default"
+    }
+  }
+}
