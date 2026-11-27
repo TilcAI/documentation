@@ -112,4 +112,27 @@ CI no publica ni despliega automáticamente (steps deshabilitados). La instalaci
 GitHub Packages falló E403 con las credenciales disponibles. Se preparó una imagen de actualización
 de fuentes sobre el runtime verificado 59917c41, con dependencias y lockfile sin cambios; el smoke
 del candidato confirma migración 10 y métodos Solana del cliente. Se hizo backup SQLite coherente
-antes del cambio. La verificación final del servidor y el commit desplegado se documentan tras el rollout.
+antes del cambio. El rollout manual ya está verificado en `saul-tilcai-lor`:
+
+- Core main: `45d8631e94d659c3649e27827c2da15e6fa72e10`; backend main/desplegado: `48b6f07dee3ba3aa8089ea1371205805fb03dced`.
+- Imagen activa `sha256:b056d339f44b0d33cdb63b262a156d305516983b5402752cc12318894184dd7a` con label de revisión completa; 112 hashes de archivos del runtime coinciden con Git.
+- `/health` y `/ready`: HTTP 200, todos los checks requeridos pasan. `/v1/routes`: 401 sin credencial y 200 con credencial operativa, sin publicar su valor.
+- SQLite: migración 9→10, quick_check ok, cero errores FK y mismas identidades de cuentas antes/después.
+- Testnet conservado, mainnet deshabilitado; Redis y relayer existente sanos. Solo se recreó el API.
+- La imagen usa etiqueta con nombre GHCR pero fue construida localmente; no se publicó en el registro. Core conserva su versión publicada anterior.
+
+[Evidencia sanitizada](SOLANA_PRODUCCION_EVIDENCIA_2026-11-27.json). El directorio operativo del
+servidor `/srv/tilcai/releases/solana-candidate-20261127` conserva Dockerfile y fuentes exportadas
+del commit. Backup coherente inmediato en `/srv/tilcai/backups/solana-20261127/pre-rollout.sqlite`;
+rollback de imagen `tilcai/tilcai-api:rollback-solana-20261127`. No restaurar DB automáticamente:
+primero detener escritores y revisar cambios posteriores al backup.
+
+La emisión Devnet usa el fork de BMS. El API desplegado recibe las bases de persistencia y el
+cliente tipado; no registra aún un provider HTTP Solana ni anuncia las cuatro capacidades como listas.
+
+## CI de los commits publicados
+
+[Core 45d8631: success](https://github.com/TilcAI/tilcai-core/actions/runs/45950644385).
+[Backend 48b6f07: success](https://github.com/TilcAI/tilcai-infrastructure/actions/runs/45950644645):
+offline lint/typecheck/tests y verificaciones Soroban; build Docker y smoke del contenedor pasan.
+El job automático deploy quedó skipped según su configuración; el rollout descrito fue manual autorizado.

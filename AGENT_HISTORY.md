@@ -763,3 +763,17 @@ Implementados contratos Solana experimentales, identidad case-sensitive, cliente
 ### Salida
 
 Implementados contratos Solana experimentales, identidad case-sensitive, cliente del fork y herramienta Devnet con journal y reconciliación. SCA + ATA FINALIZED mediante SaulChoque/openzeppelin-relayer 2226ebc2, evidencia devnet-issuance-1795759708225.json. Pasan 461 pruebas. Plan e implementación documentados en Notion. Provider HTTP, grants, rampa, x402 y CCTP siguen pendientes. Preparados commits main y rollout del API; la verificación final se registra después del despliegue.
+
+## 2026-11-27T06:17:33.285422+00:00 · SaulChoque · Codex (GPT-6)
+
+- **Sesión:** n/d; verificación posterior del prompt de despliegue registrado en la entrada anterior.
+- **Rama:** main
+- **Repositorios:** tilcai-core, tilcai-infrastructure y documentation
+
+### Prompt
+
+> una vez terminado tus cambios para solana haz push a main y verifica que los cambios se reflejen en produccion ssh saul-tilcai-lor
+
+### Salida
+
+SCA + ATA finalizadas en Devnet mediante el fork propio 2226ebc2. Core 45d8631 e infraestructura 48b6f07 publicados en main; backend desplegado y verificado en saul-tilcai-lor: 112 archivos coinciden con Git, health/ready 200, migración 10 e integridad correctas, autenticación 401/200 y cuentas preservadas. Pasan 461 pruebas locales; CI Core y backend correctos (incluidos build/smoke Docker). Rampa, x402, CCTP, grants y provider HTTP Solana siguen pendientes. Evidencia y documentación en https://www.notion.so/4252dc79a425813a800cec195a916238.

@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-11-27T06:17:33.285422+00:00",
+  "repository": "TilcAI/tilcai-infrastructure",
+  "revision": "48b6f07dee3ba3aa8089ea1371205805fb03dced",
+  "hostAlias": "saul-tilcai-lor",
+  "imageId": "sha256:b056d339f44b0d33cdb63b262a156d305516983b5402752cc12318894184dd7a",
+  "build": "committed source update over unchanged verified runtime dependencies; built locally on server, not published to GHCR",
+  "baseRevision": "59917c41d6b45e56ea2b5467dca446cc868c5fba",
+  "committedRuntimeFilesMatched": 112,
+  "healthHttp": 200,
+  "readyHttp": 200,
+  "allReadinessChecksPassed": true,
+  "authenticatedRoutesHttp": 200,
+  "unauthenticatedRoutesHttp": 401,
+  "migrationBefore": 9,
+  "migrationAfter": 10,
+  "quickCheck": "ok",
+  "foreignKeyIssues": 0,
+  "accountIdentitiesPreserved": true,
+  "environment": "testnet",
+  "mainnetTransactionsEnabled": false,
+  "solanaHttpProviderEnabled": false,
+  "existingRelayerAndRedisHealthy": true,
+  "coreRevision": "45d8631e94d659c3649e27827c2da15e6fa72e10",
+  "forkRevision": "2226ebc221afb398ecbf899943596bb881284efa",
+  "ci": {
+    "core": "success",
+    "infrastructure": "success",
+    "infrastructureRun": 45950644645,
+    "coreRun": 45950644385,
+    "automaticDeploy": "skipped; manual rollout verified"
+  }
+}
